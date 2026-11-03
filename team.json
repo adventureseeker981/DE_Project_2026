@@ -1,0 +1,27 @@
+
+{
+  "team_number": "Vinayak",
+  "group_lead": {
+    "name": "Vinayak",
+    "enrollment_no": "2501010508",
+    "github": "https://github.com/adventureseeker981"
+  },
+  "members": [
+    {
+      "name": "Preet Kalra",
+      "enrollment_no": "2501010627",
+      "github": "preetk25627-dotcom"
+    },
+    {
+      "name": "Khushi",
+      "enrollment_no": "2501010555",
+      "github": "https://github.com/khushigupta-kg"
+    },
+    {
+      "name": "Yash Malik",
+      "enrollment_no": "2501010521",
+      "github": "https://github.com/yashmalik015"
+    }
+  ]
+  
+}
