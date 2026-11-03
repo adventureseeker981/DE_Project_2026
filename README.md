@@ -22,7 +22,7 @@
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | | | |
+| Group Lead | Vinayak Agrawal | 2501010508 | adventureseeker981 |
 | Member 2 | | | |
 | Member 3 | | | |
 | Member 4 | | | |
