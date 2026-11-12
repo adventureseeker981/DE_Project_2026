@@ -1,0 +1,136 @@
+erDiagram
+    CITIES ||--o{ SELLERS : "located_in"
+    CITIES ||--o{ CUSTOMERS : "lives_in"
+    CITIES ||--o{ ADDRESSES : "delivery_to"
+    
+    CATEGORIES ||--o{ CATEGORIES : "parent_of"
+    CATEGORIES ||--o{ PRODUCTS : "categorizes"
+    
+    SELLERS ||--o{ PRODUCTS : "sells"
+    SELLERS ||--o{ ORDER_ITEMS : "fulfills"
+    
+    PRODUCTS ||--o{ ORDER_ITEMS : "ordered"
+    PRODUCTS ||--o{ PRODUCT_REVIEWS : "reviewed"
+    PRODUCTS ||--o{ CART_ITEMS : "in_cart"
+    
+    CUSTOMERS ||--o{ ADDRESSES : "has"
+    CUSTOMERS ||--o{ ORDERS : "places"
+    CUSTOMERS ||--o{ PRODUCT_REVIEWS : "writes"
+    CUSTOMERS ||--o{ CART_ITEMS : "owns_cart"
+    
+    ADDRESSES ||--o{ ORDERS : "delivered_to"
+    
+    ORDERS ||--o{ ORDER_ITEMS : "contains"
+    
+    ORDER_ITEMS ||--o{ RETURNS : "returned"
+
+    CITIES {
+        int city_id PK
+        varchar city_name
+        varchar state
+    }
+    
+    CATEGORIES {
+        int category_id PK
+        varchar category_name UK
+        int parent_category_id FK
+        boolean is_digital
+    }
+    
+    SELLERS {
+        int seller_id PK
+        varchar business_name
+        varchar gstin UK
+        int city_id FK
+        date joined_on
+        numeric seller_rating
+        varchar status
+    }
+    
+    PRODUCTS {
+        int product_id PK
+        varchar asin UK
+        int seller_id FK
+        int category_id FK
+        varchar title
+        varchar brand
+        numeric mrp
+        numeric price
+        int stock_qty
+        boolean is_prime_eligible
+        numeric avg_rating "DERIVED"
+        int review_count "DERIVED"
+        date listed_on
+        varchar status
+    }
+    
+    CUSTOMERS {
+        int customer_id PK
+        varchar full_name
+        varchar email UK
+        varchar phone UK
+        int city_id FK
+        date signup_date
+        boolean is_prime
+        date prime_since
+    }
+    
+    ADDRESSES {
+        int address_id PK
+        int customer_id FK
+        varchar label
+        varchar line1
+        int city_id FK
+        varchar pincode
+        boolean is_default
+    }
+    
+    ORDERS {
+        int order_id PK
+        int customer_id FK
+        int address_id FK "nullable"
+        timestamptz ordered_at
+        varchar payment_method
+        numeric total_amount "DERIVED"
+        varchar status
+        timestamptz shipped_at
+        timestamptz delivered_at
+    }
+    
+    ORDER_ITEMS {
+        int order_id PK_FK
+        int line_no PK
+        int product_id FK
+        int seller_id FK "REDUNDANT"
+        int quantity
+        numeric unit_price
+    }
+    
+    RETURNS {
+        int return_id PK
+        int order_id FK
+        int line_no FK
+        varchar reason
+        timestamptz requested_at
+        varchar status
+        numeric refund_amount
+    }
+    
+    PRODUCT_REVIEWS {
+        int review_id PK
+        int product_id FK
+        int customer_id FK
+        int rating
+        varchar title
+        text body
+        boolean verified_purchase
+        int helpful_votes
+        timestamptz created_at
+    }
+    
+    CART_ITEMS {
+        int customer_id PK_FK
+        int product_id PK_FK
+        int quantity
+        timestamptz added_at
+    }
