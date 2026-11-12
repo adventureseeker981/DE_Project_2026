@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" width="1400" height="1000">
+  <defs>
+    <style>
+      .entity-box { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2; }
+      .entity-text { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #1565c0; }
+      .attribute-text { font-family: Arial, sans-serif; font-size: 11px; fill: #424242; }
+      .pk-text { font-weight: bold; fill: #d32f2f; }
+      .fk-text { fill: #1976d2; }
+      .relationship-line { stroke: #666; stroke-width: 1.5; fill: none; }
+      .relationship-text { font-family: Arial, sans-serif; font-size: 10px; fill: #666; }
+      .title-text { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1565c0; }
+    </style>
+  </defs>
+  
+  <!-- Title -->
+  <text x="700" y="30" text-anchor="middle" class="title-text">Amazon Online Shopping Database - Entity Relationship Diagram</text>
+  
+  <!-- CITIES (Top Left) -->
+  <rect x="50" y="60" width="180" height="100" class="entity-box"/>
+  <text x="140" y="80" text-anchor="middle" class="entity-text">CITIES</text>
+  <line x1="50" y1="90" x2="230" y2="90" stroke="#1976d2" stroke-width="1"/>
+  <text x="60" y="107" class="attribute-text pk-text">• city_id (PK)</text>
+  <text x="60" y="125" class="attribute-text">• city_name</text>
+  <text x="60" y="143" class="attribute-text">• state</text>
+  
+  <!-- CATEGORIES (Top Center) -->
+  <rect x="280" y="60" width="240" height="140" class="entity-box"/>
+  <text x="400" y="80" text-anchor="middle" class="entity-text">CATEGORIES</text>
+  <line x1="280" y1="90" x2="520" y2="90" stroke="#1976d2" stroke-width="1"/>
+  <text x="290" y="107" class="attribute-text pk-text">• category_id (PK)</text>
+  <text x="290" y="125" class="attribute-text">• category_name (UK)</text>
+  <text x="290" y="143" class="attribute-text fk-text">• parent_category_id (FK)</text>
+  <text x="290" y="161" class="attribute-text">• is_digital</text>
+  <text x="290" y="182" class="relationship-text">↻ Self-referencing (parent)</text>
+  
+  <!-- SELLERS (Left) -->
+  <rect x="50" y="220" width="200" height="160" class="entity-box"/>
+  <text x="150" y="240" text-anchor="middle" class="entity-text">SELLERS</text>
+  <line x1="50" y1="250" x2="250" y2="250" stroke="#1976d2" stroke-width="1"/>
+  <text x="60" y="267" class="attribute-text pk-text">• seller_id (PK)</text>
+  <text x="60" y="285" class="attribute-text">• business_name</text>
+  <text x="60" y="303" class="attribute-text">• gstin (UK)</text>
+  <text x="60" y="321" class="attribute-text fk-text">• city_id (FK)</text>
+  <text x="60" y="339" class="attribute-text">• joined_on</text>
+  <text x="60" y="357" class="attribute-text">• seller_rating</text>
+  <text x="60" y="375" class="attribute-text">• status</text>
+  
+  <!-- PRODUCTS (Center) -->
+  <rect x="280" y="220" width="240" height="240" class="entity-box"/>
+  <text x="400" y="240" text-anchor="middle" class="entity-text">PRODUCTS</text>
+  <line x1="280" y1="250" x2="520" y2="250" stroke="#1976d2" stroke-width="1"/>
+  <text x="290" y="267" class="attribute-text pk-text">• product_id (PK)</text>
+  <text x="290" y="285" class="attribute-text">• asin (UK)</text>
+  <text x="290" y="303" class="attribute-text fk-text">• seller_id (FK)</text>
+  <text x="290" y="321" class="attribute-text fk-text">• category_id (FK)</text>
+  <text x="290" y="339" class="attribute-text">• title, brand</text>
+  <text x="290" y="357" class="attribute-text">• mrp, price</text>
+  <text x="290" y="375" class="attribute-text">• stock_qty</text>
+  <text x="290" y="393" class="attribute-text">• is_prime_eligible</text>
+  <text x="290" y="411" class="attribute-text" style="font-style: italic">• avg_rating (DERIVED)</text>
+  <text x="290" y="429" class="attribute-text" style="font-style: italic">• review_count (DERIVED)</text>
+  <text x="290" y="447" class="attribute-text">• listed_on, status</text>
+  
+  <!-- CUSTOMERS (Top Right) -->
+  <rect x="1000" y="60" width="200" height="180" class="entity-box"/>
+  <text x="1100" y="80" text-anchor="middle" class="entity-text">CUSTOMERS</text>
+  <line x1="1000" y1="90" x2="1200" y2="90" stroke="#1976d2" stroke-width="1"/>
+  <text x="1010" y="107" class="attribute-text pk-text">• customer_id (PK)</text>
+  <text x="1010" y="125" class="attribute-text">• full_name</text>
+  <text x="1010" y="143" class="attribute-text">• email (UK)</text>
+  <text x="1010" y="161" class="attribute-text">• phone (UK)</text>
+  <text x="1010" y="179" class="attribute-text fk-text">• city_id (FK)</text>
+  <text x="1010" y="197" class="attribute-text">• signup_date</text>
+  <text x="1010" y="215" class="attribute-text">• is_prime</text>
+  <text x="1010" y="233" class="attribute-text">• prime_since</text>
+  
+  <!-- ADDRESSES (Right Upper) -->
+  <rect x="1000" y="270" width="200" height="160" class="entity-box"/>
+  <text x="1100" y="290" text-anchor="middle" class="entity-text">ADDRESSES</text>
+  <line x1="1000" y1="300" x2="1200" y2="300" stroke="#1976d2" stroke-width="1"/>
+  <text x="1010" y="317" class="attribute-text pk-text">• address_id (PK)</text>
+  <text x="1010" y="335" class="attribute-text fk-text">• customer_id (FK)</text>
+  <text x="1010" y="353" class="attribute-text">• label</text>
+  <text x="1010" y="371" class="attribute-text">• line1</text>
+  <text x="1010" y="389" class="attribute-text fk-text">• city_id (FK)</text>
+  <text x="1010" y="407" class="attribute-text">• pincode</text>
+  <text x="1010" y="425" class="attribute-text">• is_default</text>
+  
+  <!-- ORDERS (Center Right) -->
+  <rect x="700" y="270" width="220" height="200" class="entity-box"/>
+  <text x="810" y="290" text-anchor="middle" class="entity-text">ORDERS</text>
+  <line x1="700" y1="300" x2="920" y2="300" stroke="#1976d2" stroke-width="1"/>
+  <text x="710" y="317" class="attribute-text pk-text">• order_id (PK)</text>
+  <text x="710" y="335" class="attribute-text fk-text">• customer_id (FK)</text>
+  <text x="710" y="353" class="attribute-text fk-text">• address_id (FK, nullable)</text>
+  <text x="710" y="371" class="attribute-text">• ordered_at</text>
+  <text x="710" y="389" class="attribute-text">• payment_method</text>
+  <text x="710" y="407" class="attribute-text" style="font-style: italic">• total_amount (DERIVED)</text>
+  <text x="710" y="425" class="attribute-text">• status</text>
+  <text x="710" y="443" class="attribute-text">• shipped_at</text>
+  <text x="710" y="461" class="attribute-text">• delivered_at</text>
+  
+  <!-- ORDER_ITEMS (Bottom Center) -->
+  <rect x="550" y="520" width="220" height="160" class="entity-box"/>
+  <text x="660" y="540" text-anchor="middle" class="entity-text">ORDER_ITEMS</text>
+  <line x1="550" y1="550" x2="770" y2="550" stroke="#1976d2" stroke-width="1"/>
+  <text x="560" y="567" class="attribute-text pk-text">• order_id (PK, FK)</text>
+  <text x="560" y="585" class="attribute-text pk-text">• line_no (PK)</text>
+  <text x="560" y="603" class="attribute-text fk-text">• product_id (FK)</text>
+  <text x="560" y="621" class="attribute-text fk-text">• seller_id (FK, redundant)</text>
+  <text x="560" y="639" class="attribute-text">• quantity</text>
+  <text x="560" y="657" class="attribute-text">• unit_price</text>
+  
+  <!-- RETURNS (Bottom Right) -->
+  <rect x="850" y="520" width="200" height="160" class="entity-box"/>
+  <text x="950" y="540" text-anchor="middle" class="entity-text">RETURNS</text>
+  <line x1="850" y1="550" x2="1050" y2="550" stroke="#1976d2" stroke-width="1"/>
+  <text x="860" y="567" class="attribute-text pk-text">• return_id (PK)</text>
+  <text x="860" y="585" class="attribute-text fk-text">• order_id (FK)</text>
+  <text x="860" y="603" class="attribute-text fk-text">• line_no (FK)</text>
+  <text x="860" y="621" class="attribute-text">• reason</text>
+  <text x="860" y="639" class="attribute-text">• requested_at</text>
+  <text x="860" y="657" class="attribute-text">• status</text>
+  <text x="860" y="675" class="attribute-text">• refund_amount</text>
+  
+  <!-- PRODUCT_REVIEWS (Bottom Left) -->
+  <rect x="50" y="520" width="220" height="180" class="entity-box"/>
+  <text x="160" y="540" text-anchor="middle" class="entity-text">PRODUCT_REVIEWS</text>
+  <line x1="50" y1="550" x2="270" y2="550" stroke="#1976d2" stroke-width="1"/>
+  <text x="60" y="567" class="attribute-text pk-text">• review_id (PK)</text>
+  <text x="60" y="585" class="attribute-text fk-text">• product_id (FK)</text>
+  <text x="60" y="603" class="attribute-text fk-text">• customer_id (FK)</text>
+  <text x="60" y="621" class="attribute-text">• rating</text>
+  <text x="60" y="639" class="attribute-text">• title</text>
+  <text x="60" y="657" class="attribute-text">• body</text>
+  <text x="60" y="675" class="attribute-text">• verified_purchase</text>
+  <text x="60" y="693" class="attribute-text">• helpful_votes, created_at</text>
+  
+  <!-- CART_ITEMS (Center Bottom) -->
+  <rect x="300" y="520" width="200" height="140" class="entity-box"/>
+  <text x="400" y="540" text-anchor="middle" class="entity-text">CART_ITEMS</text>
+  <line x1="300" y1="550" x2="500" y2="550" stroke="#1976d2" stroke-width="1"/>
+  <text x="310" y="567" class="attribute-text pk-text">• customer_id (PK, FK)</text>
+  <text x="310" y="585" class="attribute-text pk-text">• product_id (PK, FK)</text>
+  <text x="310" y="603" class="attribute-text">• quantity</text>
+  <text x="310" y="621" class="attribute-text">• added_at</text>
+  <text x="310" y="642" class="relationship-text">M:N between</text>
+  <text x="310" y="655" class="relationship-text">CUSTOMERS & PRODUCTS</text>
+  
+  <!-- Relationships -->
+  
+  <!-- Cities to Sellers -->
+  <line x1="140" y1="160" x2="140" y2="220" class="relationship-line"/>
+  <text x="145" y="190" class="relationship-text">1:N</text>
+  
+  <!-- Cities to Customers -->
+  <line x1="230" y1="110" x2="1000" y2="110" class="relationship-line"/>
+  <text x="600" y="105" class="relationship-text">1:N (customer city)</text>
+  
+  <!-- Cities to Addresses -->
+  <line x1="230" y1="130" x2="1000" y2="350" class="relationship-line"/>
+  <text x="600" y="240" class="relationship-text">1:N (delivery city)</text>
+  
+  <!-- Categories to Products -->
+  <line x1="400" y1="200" x2="400" y2="220" class="relationship-line"/>
+  <text x="405" y="210" class="relationship-text">1:N</text>
+  
+  <!-- Sellers to Products -->
+  <line x1="250" y1="300" x2="280" y2="300" class="relationship-line"/>
+  <text x="255" y="295" class="relationship-text">1:N</text>
+  
+  <!-- Sellers to OrderItems -->
+  <line x1="150" y1="380" x2="150" y2="490" x2="550" y2="600" class="relationship-line"/>
+  <text x="155" y="440" class="relationship-text">1:N (fulfills)</text>
+  
+  <!-- Products to OrderItems -->
+  <line x1="400" y1="460" x2="400" y2="490" x2="660" y2="520" class="relationship-line"/>
+  <text x="405" y="490" class="relationship-text">1:N</text>
+  
+  <!-- Products to Reviews -->
+  <line x1="280" y1="380" x2="160" y2="520" class="relationship-line"/>
+  <text x="220" y="450" class="relationship-text">1:N</text>
+  
+  <!-- Products to Cart -->
+  <line x1="400" y1="460" x2="400" y2="520" class="relationship-line"/>
+  <text x="405" y="490" class="relationship-text">1:N</text>
+  
+  <!-- Customers to Addresses -->
+  <line x1="1100" y1="240" x2="1100" y2="270" class="relationship-line"/>
+  <text x="1105" y="255" class="relationship-text">1:N</text>
+  
+  <!-- Customers to Orders -->
+  <line x1="1000" y1="150" x2="810" y2="270" class="relationship-line"/>
+  <text x="900" y="210" class="relationship-text">1:N (places)</text>
+  
+  <!-- Customers to Reviews -->
+  <line x1="1000" y1="240" x2="270" y2="610" class="relationship-line"/>
+  <text x="635" y="425" class="relationship-text">1:N (writes)</text>
+  
+  <!-- Customers to Cart -->
+  <line x1="1000" y1="230" x2="500" y2="580" class="relationship-line"/>
+  <text x="750" y="405" class="relationship-text">1:N (owns cart)</text>
+  
+  <!-- Addresses to Orders -->
+  <line x1="1000" y1="350" x2="920" y2="350" class="relationship-line"/>
+  <text x="925" y="345" class="relationship-text">1:N</text>
+  
+  <!-- Orders to OrderItems -->
+  <line x1="810" y1="470" x2="660" y2="520" class="relationship-line"/>
+  <text x="735" y="495" class="relationship-text">1:N (contains)</text>
+  
+  <!-- OrderItems to Returns -->
+  <line x1="770" y1="600" x2="850" y2="600" class="relationship-line"/>
+  <text x="775" y="595" class="relationship-text">1:N</text>
+  
+  <!-- Legend -->
+  <rect x="1250" y="60" width="130" height="150" fill="white" stroke="#666" stroke-width="1"/>
+  <text x="1315" y="80" text-anchor="middle" style="font-family: Arial; font-size: 12px; font-weight: bold;">Legend</text>
+  <text x="1260" y="100" class="attribute-text pk-text">PK = Primary Key</text>
+  <text x="1260" y="118" class="attribute-text fk-text">FK = Foreign Key</text>
+  <text x="1260" y="136" class="attribute-text">UK = Unique</text>
+  <text x="1260" y="154" class="attribute-text" style="font-style: italic">DERIVED = Calculated</text>
+  <text x="1260" y="172" class="attribute-text">1:N = One-to-Many</text>
+  <text x="1260" y="190" class="attribute-text">M:N = Many-to-Many</text>
+  
+  <!-- Notes -->
+  <text x="700" y="750" text-anchor="middle" style="font-family: Arial; font-size: 11px; fill: #666;">
+    Key Features: 11 tables • 27 foreign key relationships • 3NF/BCNF • 40+ CHECK constraints • Justified denormalization for performance
+  </text>
+  <text x="700" y="770" text-anchor="middle" style="font-family: Arial; font-size: 11px; fill: #666;">
+    Team T0043: Vinayak, Preet Kalra, Yash Malik, Khushi Gupta • Amazon Online Shopping DBMS Project • November 2026
+  </text>
+</svg>
