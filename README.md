@@ -24,7 +24,7 @@
 |------|------|----------------|-----------------|
 | Group Lead | Vinayak| 2501010508| adventureseeker981|
 | Member 2 | Preet Kalra| 2501010627| preetk25627-dotcom|
-| Member 3 | Yash Malik| 2501010521| yashmalik015|
+| Member 3 | Yash Malik | 2501010521| yashmalik015|
 | Member 4 | Khushi Gupta| 2501010555| khushigupta-kg|
 
 **Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
