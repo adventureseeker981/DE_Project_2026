@@ -1,0 +1,31 @@
+query_id,type,avg_ms,median_ms,min_ms,max_ms,scan_nodes
+R01,READ,0.0,0.0,0.0,0.0,Seq Scan on products
+R02,READ,0.0,0.0,0.0,0.0,Recursive CTE + Seq Scan
+R03,READ,0.0,0.0,0.0,0.0,Seq Scan on product_reviews
+R04,READ,0.0,0.0,0.0,0.0,Seq Scan on orders
+R05,READ,0.0,0.0,0.0,0.0,Seq Scan on orders
+R06,READ,0.0,0.0,0.0,0.0,Seq Scan on order_items
+R07,READ,0.0,0.0,0.0,0.0,Seq Scan on products
+R08,READ,0.0,0.0,0.0,0.0,WindowAgg + Hash Join
+R09,READ,0.0,0.0,0.0,0.0,HashAggregate
+R10,READ,0.0,0.0,0.0,0.0,Hash Anti Join
+R11,READ,0.0,0.0,0.0,0.0,Hash Join
+R12,READ,0.0,0.0,0.0,0.0,Hash Left Join
+R13,READ,0.0,0.0,0.0,0.0,Seq Scan on addresses
+R14,READ,0.0,0.0,0.0,0.0,Seq Scan on products
+R15,READ,0.0,0.0,0.0,0.0,HashAggregate
+R16,READ,0.0,0.0,0.0,0.0,Nested Loop
+R17,READ,0.0,0.0,0.0,0.0,Hash Anti Join
+R18,READ,0.0,0.0,0.0,0.0,WindowAgg
+R19,READ,0.0,0.0,0.0,0.0,Seq Scan on products
+R20,READ,0.0,0.0,0.0,0.0,WindowAgg
+R21,READ,0.0,0.0,0.0,0.0,Seq Scan on orders
+R22,READ,0.0,0.0,0.0,0.0,Seq Scan on orders
+R23,READ,0.0,0.0,0.0,0.0,Nested Loop
+R24,READ,0.0,0.0,0.0,0.0,Seq Scan on products
+W01,WRITE,0.0,0.0,0.0,0.0,Insert on orders
+W02,WRITE,0.0,0.0,0.0,0.0,Update on products
+W03,WRITE,0.0,0.0,0.0,0.0,Update on products
+W04,WRITE,0.0,0.0,0.0,0.0,Insert on cart_items
+W05,WRITE,0.0,0.0,0.0,0.0,Update on orders
+W06,WRITE,0.0,0.0,0.0,0.0,Delete on cart_items
