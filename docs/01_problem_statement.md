@@ -1,8 +1,29 @@
-We are facing a total of 9 problems here, one of which is that whenever a customer searches for a product or a category, a category can have many subcategories, and it is not well defined.
-In the database, it is not that much structured, so the browsing experience on the search and categories page is not as good as it should be. The second problem is on the products page, where the product page should show products according to the category or products that are frequently bought together. 
-What is happening here is that, for the popular products, the page is becoming a little slow. Third problem is on the customer feedback. The "Your Orders" and "Order Details" pages are loading very slowly.
-Fourth problem is that the seller central page, where it should show the prices, low stock, and all of those things, is also slow. The fifth issue we are facing is that Logistics are unable to quickly find the packing queue lags and the stuck and late shipments. 
-The address cleanup report is saying that no address is unused, but on the customer support side, the statement is contradictory. That's another problem. Seventh problem is that cart cleanup jobs and abandoned cart campaigns run long. 
-Eighth issue by the trust and safety team is that Trust & safety needs to catch fake 'verified purchase' reviews and analyse review text. And lastly, the finance team says "Category, Prime and finance reports (returns, AOV, GMV, spend tiers) time out, and traffic will grow 20× by next festive season."
-Our job is to reflect on all of these issues, restructure the whole database, and make sure that it is optimized for future use. Also, first, we must ensure that this schema is well structured according to all the data inputs we currently have. 
-Next, we will analyze the performance of the data and ensure that whenever we optimize it, we are not changing the results we are getting. And last, we must ensure that it is scalable and ready for future use also. 
+# Phase 1: Problem Understanding
+
+Amazon India is a marketplace where customers shop across a hierarchy of product categories, sellers manage listings and stock, and logistics teams fulfill orders. The existing database has no documented schema, and teams report slow customer workflows, operational tools, and business reports. This phase identifies the needs behind those reports and groups the related workload queries before schema design and performance testing.
+
+## Business problems and stakeholders
+
+| Problem | Business need | Stakeholder(s) affected | Classification | Related queries |
+|---|---|---|---|---|
+| **P1 — Search and category browsing** | Find active products and browse all levels of a category tree quickly, including when a category has many descendants. | Customers; Search / Browse team | Customer-facing / real-time | R01, R02, R14 |
+| **P2 — Product details** | Load product ratings and related-product recommendations promptly, including for popular products with many reviews or sales. | Customers; Product page team | Customer-facing / real-time | R03, R11, R24 |
+| **P3 — Orders and order details** | Let customers open their order history and inspect an order's items without long waits. | Customers; Customer app team | Customer-facing / real-time | R04, R23 |
+| **P4 — Seller Central** | Provide sellers with responsive sales, stock, price, and revenue information and allow timely inventory and price updates. | Sellers; Seller Central team | Operational / real-time | R06, R07, R15, W02, W03 |
+| **P5 — Shipping and fulfillment** | Quickly identify shipments that are stuck or late and keep the packing-to-shipping queue moving. | Logistics and fulfillment teams | Operational / real-time | R05, R21, W05 |
+| **P6 — Unused addresses** | Find saved addresses that have not been used by any order so support and data teams can investigate or clean them up. | Customer support; Data quality team | Reporting / analytics | R13 |
+| **P7 — Abandoned carts** | Identify eligible abandoned carts for campaigns and remove expired cart entries efficiently. | Marketing; Customers; Operations | Batch / operational analytics | R10, W04, W06 |
+| **P8 — Review integrity and insights** | Flag potentially unsubstantiated verified-purchase reviews and search review text for product feedback themes. | Trust & Safety; Product teams | Reporting / analytics | R16, R17 |
+| **P9 — Business reporting at growth** | Produce category, Prime, finance, returns, and customer-spend reports reliably as data volume and traffic grow by an expected 20×. | Category managers; Prime team; Finance; Analytics | Reporting / analytics | R08, R09, R12, R18, R19, R20 |
+
+## Assumptions
+
+- “Real-time” means a customer or operational workflow needs a prompt response; it does not imply a specific latency target until the project’s benchmark targets are applied.
+- Seller and logistics queries are classified as operational / real-time because they support active business workflows, even though they are not customer-facing.
+- Reports that aggregate or rank data across many records are classified as reporting / analytics. Cart cleanup and bulk cart loading are batch operations, while abandoned-cart selection supports marketing analysis.
+- The 20× growth estimate is a planning assumption supplied in the project brief; actual performance must be measured on the faculty-provided large dataset.
+- Query results must remain correct during optimization. Any discovered data-quality or SQL correctness issue should be documented rather than hidden by changing the underlying data.
+
+## Phase 1 outcome
+
+The project will reconstruct a constrained schema from the supplied CSV exports, establish baseline performance for all 30 workload queries, optimize without changing intended results, and evaluate whether the design can handle the larger dataset.
