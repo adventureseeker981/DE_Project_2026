@@ -1,0 +1,75 @@
+=== R06 run 1 ===
+Sort  (cost=5248.59..5248.59 rows=1 width=25) (actual time=17.669..18.834 rows=1.00 loops=1)
+  Sort Key: o.ordered_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=337 read=1885
+  ->  Gather  (cost=1000.29..5248.58 rows=1 width=25) (actual time=16.813..18.813 rows=1.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=334 read=1885
+        ->  Nested Loop  (cost=0.29..4248.48 rows=1 width=25) (actual time=14.091..14.457 rows=0.50 loops=2)
+              Buffers: shared hit=334 read=1885
+              ->  Parallel Seq Scan on order_items oi  (cost=0.00..3556.71 rows=94 width=17) (actual time=1.285..11.329 rows=71.00 loops=2)
+                    Filter: (seller_id = 217)
+                    Rows Removed by Filter: 119929
+                    Buffers: shared read=1792
+              ->  Index Scan using orders_pkey on orders o  (cost=0.29..7.36 rows=1 width=12) (actual time=0.044..0.044 rows=0.01 loops=142)
+                    Index Cond: (order_id = oi.order_id)
+                    Filter: (date_trunc('month'::text, ordered_at) = '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+                    Rows Removed by Filter: 1
+                    Index Searches: 142
+                    Buffers: shared hit=334 read=93
+Planning:
+  Buffers: shared hit=220
+Planning Time: 0.614 ms
+Execution Time: 18.880 ms
+=== R06 run 2 ===
+Sort  (cost=5248.59..5248.59 rows=1 width=25) (actual time=7.987..9.005 rows=1.00 loops=1)
+  Sort Key: o.ordered_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=2222
+  ->  Gather  (cost=1000.29..5248.58 rows=1 width=25) (actual time=7.637..8.984 rows=1.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=2219
+        ->  Nested Loop  (cost=0.29..4248.48 rows=1 width=25) (actual time=6.080..6.219 rows=0.50 loops=2)
+              Buffers: shared hit=2219
+              ->  Parallel Seq Scan on order_items oi  (cost=0.00..3556.71 rows=94 width=17) (actual time=0.060..5.878 rows=71.00 loops=2)
+                    Filter: (seller_id = 217)
+                    Rows Removed by Filter: 119929
+                    Buffers: shared hit=1792
+              ->  Index Scan using orders_pkey on orders o  (cost=0.29..7.36 rows=1 width=12) (actual time=0.005..0.005 rows=0.01 loops=142)
+                    Index Cond: (order_id = oi.order_id)
+                    Filter: (date_trunc('month'::text, ordered_at) = '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+                    Rows Removed by Filter: 1
+                    Index Searches: 142
+                    Buffers: shared hit=427
+Planning:
+  Buffers: shared hit=220
+Planning Time: 0.639 ms
+Execution Time: 9.050 ms
+=== R06 run 3 ===
+Sort  (cost=5248.59..5248.59 rows=1 width=25) (actual time=7.915..8.953 rows=1.00 loops=1)
+  Sort Key: o.ordered_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=2222
+  ->  Gather  (cost=1000.29..5248.58 rows=1 width=25) (actual time=7.555..8.935 rows=1.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=2219
+        ->  Nested Loop  (cost=0.29..4248.48 rows=1 width=25) (actual time=6.072..6.224 rows=0.50 loops=2)
+              Buffers: shared hit=2219
+              ->  Parallel Seq Scan on order_items oi  (cost=0.00..3556.71 rows=94 width=17) (actual time=0.235..5.890 rows=71.00 loops=2)
+                    Filter: (seller_id = 217)
+                    Rows Removed by Filter: 119929
+                    Buffers: shared hit=1792
+              ->  Index Scan using orders_pkey on orders o  (cost=0.29..7.36 rows=1 width=12) (actual time=0.005..0.005 rows=0.01 loops=142)
+                    Index Cond: (order_id = oi.order_id)
+                    Filter: (date_trunc('month'::text, ordered_at) = '2026-06-01 00:00:00+05:30'::timestamp with time zone)
+                    Rows Removed by Filter: 1
+                    Index Searches: 142
+                    Buffers: shared hit=427
+Planning:
+  Buffers: shared hit=220
+Planning Time: 0.608 ms
+Execution Time: 8.995 ms

@@ -1,0 +1,39 @@
+=== R21 run 1 ===
+Sort  (cost=3588.18..3593.36 rows=2070 width=40) (actual time=9.304..9.351 rows=1327.00 loops=1)
+  Sort Key: ((delivered_at - ordered_at)) DESC
+  Sort Method: quicksort  Memory: 121kB
+  Buffers: shared hit=1374
+  ->  Seq Scan on orders  (cost=0.00..3474.18 rows=2070 width=40) (actual time=7.856..9.068 rows=1327.00 loops=1)
+        Filter: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (delivered_at > (ordered_at + '5 days'::interval)))
+        Rows Removed by Filter: 118673
+        Buffers: shared hit=1369
+Planning:
+  Buffers: shared hit=91
+Planning Time: 0.274 ms
+Execution Time: 9.441 ms
+=== R21 run 2 ===
+Sort  (cost=3588.18..3593.36 rows=2070 width=40) (actual time=9.323..9.370 rows=1327.00 loops=1)
+  Sort Key: ((delivered_at - ordered_at)) DESC
+  Sort Method: quicksort  Memory: 121kB
+  Buffers: shared hit=1374
+  ->  Seq Scan on orders  (cost=0.00..3474.18 rows=2070 width=40) (actual time=7.823..9.084 rows=1327.00 loops=1)
+        Filter: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (delivered_at > (ordered_at + '5 days'::interval)))
+        Rows Removed by Filter: 118673
+        Buffers: shared hit=1369
+Planning:
+  Buffers: shared hit=91
+Planning Time: 0.273 ms
+Execution Time: 9.460 ms
+=== R21 run 3 ===
+Sort  (cost=3588.18..3593.36 rows=2070 width=40) (actual time=9.426..9.472 rows=1327.00 loops=1)
+  Sort Key: ((delivered_at - ordered_at)) DESC
+  Sort Method: quicksort  Memory: 121kB
+  Buffers: shared hit=1374
+  ->  Seq Scan on orders  (cost=0.00..3474.18 rows=2070 width=40) (actual time=7.908..9.192 rows=1327.00 loops=1)
+        Filter: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (delivered_at > (ordered_at + '5 days'::interval)))
+        Rows Removed by Filter: 118673
+        Buffers: shared hit=1369
+Planning:
+  Buffers: shared hit=91
+Planning Time: 0.288 ms
+Execution Time: 9.565 ms
