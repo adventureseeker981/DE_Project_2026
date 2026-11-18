@@ -27,7 +27,7 @@
 | Member 3 | Yash Malik| 2501010521| yashmalik015|
 | Member 4 | Khushi Gupta| 2501010555| khushigupta-kg|
 
-**Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
+**Team No.:** 0043 · **Section:** ____ · **Repository URL:** [DE repo](https://github.com/adventureseeker981/DE_Project_2026)
 
 ---
 

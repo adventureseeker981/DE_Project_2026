@@ -1,26 +1,30 @@
 
 {
-  "team_number": "Vinayak",
+  "team_number": "Vinayak Agrawal",
   "group_lead": {
-    "name": "Vinayak",
+    "name": "Vinayak Agrawal",
     "enrollment_no": "2501010508",
-    "github": "https://github.com/adventureseeker981"
+    "github": "https://github.com/adventureseeker981",
+    "email_id": "Vinayak.a25508@nst.rishihood.edu.in"
   },
   "members": [
     {
       "name": "Preet Kalra",
       "enrollment_no": "2501010627",
-      "github": "https://github.com/preetk25627-dotcom"
+      "github": "https://github.com/preetk25627-dotcom",
+      "email_id": "preet.k25627@nst.rishihood.edu.in"
     },
     {
-      "name": "Khushi",
+      "name": "Khushi Gupta",
       "enrollment_no": "2501010555",
-      "github": "https://github.com/khushigupta-kg"
+      "github": "https://github.com/khushigupta-kg",
+      "email_id": "khushi.g25555@nst.rishihood.edu.in"
     },
     {
       "name": "Yash Malik",
       "enrollment_no": "2501010521",
-      "github": "https://github.com/yashmalik015"
+      "github": "https://github.com/yashmalik015",
+      "email_id": "yash.m25521@nst.rishihood.edu.in"
     }
   ]
   
