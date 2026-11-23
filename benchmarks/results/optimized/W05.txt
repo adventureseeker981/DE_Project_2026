@@ -1,0 +1,303 @@
+=== W05 run 1 ===
+Update on orders  (cost=2.36..53.78 rows=0 width=0) (actual time=1.383..1.385 rows=0.00 loops=1)
+  Update on orders_before_2025 orders_1
+  Update on orders_2025_q1 orders_2
+  Update on orders_2025_q2 orders_3
+  Update on orders_2025_q3 orders_4
+  Update on orders_2025_q4 orders_5
+  Update on orders_2026_q1 orders_6
+  Update on orders_2026_q2 orders_7
+  Update on orders_2026_q3 orders_8
+  Update on orders_2026_q4 orders_9
+  Update on orders_future orders_10
+  Buffers: shared hit=69 read=13 dirtied=10
+  InitPlan 2
+    ->  Result  (cost=2.35..2.36 rows=1 width=4) (actual time=0.059..0.060 rows=1.00 loops=1)
+          Buffers: shared hit=10 read=1
+          InitPlan 1
+            ->  Limit  (cost=1.43..2.35 rows=1 width=4) (actual time=0.058..0.059 rows=1.00 loops=1)
+                  Buffers: shared hit=10 read=1
+                  ->  Merge Append  (cost=1.43..63.92 rows=68 width=4) (actual time=0.057..0.058 rows=1.00 loops=1)
+                        Sort Key: orders_11.order_id
+                        Buffers: shared hit=10 read=1
+                        ->  Index Only Scan using orders_before_2025_order_id_idx on orders_before_2025 orders_12  (cost=0.12..8.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q1_order_id_idx on orders_2025_q1 orders_13  (cost=0.12..4.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q2_order_id_idx on orders_2025_q2 orders_14  (cost=0.12..4.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q3_order_id_idx on orders_2025_q3 orders_15  (cost=0.12..4.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q4_order_id_idx on orders_2025_q4 orders_16  (cost=0.12..4.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2026_q1_order_id_idx on orders_2026_q1 orders_17  (cost=0.12..4.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2026_q2_order_id_idx on orders_2026_q2 orders_18  (cost=0.14..9.03 rows=59 width=4) (actual time=0.036..0.036 rows=1.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1 read=1
+                        ->  Index Only Scan using orders_2026_q3_order_id_idx on orders_2026_q3 orders_19  (cost=0.12..8.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2026_q4_order_id_idx on orders_2026_q4 orders_20  (cost=0.12..8.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_future_order_id_idx on orders_future orders_21  (cost=0.12..8.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+  ->  Append  (cost=0.00..51.42 rows=10 width=76) (actual time=0.410..0.420 rows=1.00 loops=1)
+        Buffers: shared hit=23 read=2
+        ->  Seq Scan on orders_before_2025 orders_1  (cost=0.00..0.00 rows=1 width=76) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+        ->  Index Scan using orders_2025_q1_pkey on orders_2025_q1 orders_2  (cost=0.29..8.31 rows=1 width=76) (actual time=0.064..0.064 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=12 read=1
+        ->  Index Scan using orders_2025_q2_pkey on orders_2025_q2 orders_3  (cost=0.29..8.31 rows=1 width=76) (actual time=0.004..0.004 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2025_q3_pkey on orders_2025_q3 orders_4  (cost=0.29..8.31 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2025_q4_pkey on orders_2025_q4 orders_5  (cost=0.29..8.31 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2026_q1_pkey on orders_2026_q1 orders_6  (cost=0.29..8.31 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2026_q2_pkey on orders_2026_q2 orders_7  (cost=0.29..8.31 rows=1 width=76) (actual time=0.330..0.331 rows=1.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2 read=1
+        ->  Seq Scan on orders_2026_q3 orders_8  (cost=0.00..1.52 rows=1 width=76) (actual time=0.005..0.005 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+              Buffers: shared hit=1
+        ->  Seq Scan on orders_2026_q4 orders_9  (cost=0.00..0.00 rows=1 width=76) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+        ->  Seq Scan on orders_future orders_10  (cost=0.00..0.00 rows=1 width=76) (actual time=0.002..0.002 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+Planning:
+  Buffers: shared hit=1911
+Planning Time: 3.334 ms
+Execution Time: 1.494 ms
+=== W05 run 2 ===
+Update on orders  (cost=2.36..53.78 rows=0 width=0) (actual time=0.198..0.199 rows=0.00 loops=1)
+  Update on orders_before_2025 orders_1
+  Update on orders_2025_q1 orders_2
+  Update on orders_2025_q2 orders_3
+  Update on orders_2025_q3 orders_4
+  Update on orders_2025_q4 orders_5
+  Update on orders_2026_q1 orders_6
+  Update on orders_2026_q2 orders_7
+  Update on orders_2026_q3 orders_8
+  Update on orders_2026_q4 orders_9
+  Update on orders_future orders_10
+  Buffers: shared hit=84
+  InitPlan 2
+    ->  Result  (cost=2.35..2.36 rows=1 width=4) (actual time=0.051..0.051 rows=1.00 loops=1)
+          Buffers: shared hit=12
+          InitPlan 1
+            ->  Limit  (cost=1.43..2.35 rows=1 width=4) (actual time=0.050..0.050 rows=1.00 loops=1)
+                  Buffers: shared hit=12
+                  ->  Merge Append  (cost=1.43..63.92 rows=68 width=4) (actual time=0.049..0.050 rows=1.00 loops=1)
+                        Sort Key: orders_11.order_id
+                        Buffers: shared hit=12
+                        ->  Index Only Scan using orders_before_2025_order_id_idx on orders_before_2025 orders_12  (cost=0.12..8.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q1_order_id_idx on orders_2025_q1 orders_13  (cost=0.12..4.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q2_order_id_idx on orders_2025_q2 orders_14  (cost=0.12..4.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q3_order_id_idx on orders_2025_q3 orders_15  (cost=0.12..4.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q4_order_id_idx on orders_2025_q4 orders_16  (cost=0.12..4.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2026_q1_order_id_idx on orders_2026_q1 orders_17  (cost=0.12..4.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2026_q2_order_id_idx on orders_2026_q2 orders_18  (cost=0.14..9.03 rows=59 width=4) (actual time=0.026..0.026 rows=1.00 loops=1)
+                              Heap Fetches: 1
+                              Index Searches: 1
+                              Buffers: shared hit=3
+                        ->  Index Only Scan using orders_2026_q3_order_id_idx on orders_2026_q3 orders_19  (cost=0.12..8.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2026_q4_order_id_idx on orders_2026_q4 orders_20  (cost=0.12..8.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_future_order_id_idx on orders_future orders_21  (cost=0.12..8.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+  ->  Append  (cost=0.00..51.42 rows=10 width=76) (actual time=0.078..0.083 rows=1.00 loops=1)
+        Buffers: shared hit=28
+        ->  Seq Scan on orders_before_2025 orders_1  (cost=0.00..0.00 rows=1 width=76) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+        ->  Index Scan using orders_2025_q1_pkey on orders_2025_q1 orders_2  (cost=0.29..8.31 rows=1 width=76) (actual time=0.056..0.056 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=14
+        ->  Index Scan using orders_2025_q2_pkey on orders_2025_q2 orders_3  (cost=0.29..8.31 rows=1 width=76) (actual time=0.004..0.004 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2025_q3_pkey on orders_2025_q3 orders_4  (cost=0.29..8.31 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2025_q4_pkey on orders_2025_q4 orders_5  (cost=0.29..8.31 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2026_q1_pkey on orders_2026_q1 orders_6  (cost=0.29..8.31 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2026_q2_pkey on orders_2026_q2 orders_7  (cost=0.29..8.31 rows=1 width=76) (actual time=0.007..0.007 rows=1.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=5
+        ->  Seq Scan on orders_2026_q3 orders_8  (cost=0.00..1.52 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+              Buffers: shared hit=1
+        ->  Seq Scan on orders_2026_q4 orders_9  (cost=0.00..0.00 rows=1 width=76) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+        ->  Seq Scan on orders_future orders_10  (cost=0.00..0.00 rows=1 width=76) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+Planning:
+  Buffers: shared hit=1911
+Planning Time: 3.746 ms
+Execution Time: 0.308 ms
+=== W05 run 3 ===
+Update on orders  (cost=2.36..53.78 rows=0 width=0) (actual time=0.203..0.204 rows=0.00 loops=1)
+  Update on orders_before_2025 orders_1
+  Update on orders_2025_q1 orders_2
+  Update on orders_2025_q2 orders_3
+  Update on orders_2025_q3 orders_4
+  Update on orders_2025_q4 orders_5
+  Update on orders_2026_q1 orders_6
+  Update on orders_2026_q2 orders_7
+  Update on orders_2026_q3 orders_8
+  Update on orders_2026_q4 orders_9
+  Update on orders_future orders_10
+  Buffers: shared hit=84
+  InitPlan 2
+    ->  Result  (cost=2.35..2.36 rows=1 width=4) (actual time=0.054..0.055 rows=1.00 loops=1)
+          Buffers: shared hit=12
+          InitPlan 1
+            ->  Limit  (cost=1.43..2.35 rows=1 width=4) (actual time=0.053..0.054 rows=1.00 loops=1)
+                  Buffers: shared hit=12
+                  ->  Merge Append  (cost=1.43..63.92 rows=68 width=4) (actual time=0.053..0.054 rows=1.00 loops=1)
+                        Sort Key: orders_11.order_id
+                        Buffers: shared hit=12
+                        ->  Index Only Scan using orders_before_2025_order_id_idx on orders_before_2025 orders_12  (cost=0.12..8.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q1_order_id_idx on orders_2025_q1 orders_13  (cost=0.12..4.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q2_order_id_idx on orders_2025_q2 orders_14  (cost=0.12..4.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q3_order_id_idx on orders_2025_q3 orders_15  (cost=0.12..4.14 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2025_q4_order_id_idx on orders_2025_q4 orders_16  (cost=0.12..4.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2026_q1_order_id_idx on orders_2026_q1 orders_17  (cost=0.12..4.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2026_q2_order_id_idx on orders_2026_q2 orders_18  (cost=0.14..9.03 rows=59 width=4) (actual time=0.025..0.025 rows=1.00 loops=1)
+                              Heap Fetches: 1
+                              Index Searches: 1
+                              Buffers: shared hit=3
+                        ->  Index Only Scan using orders_2026_q3_order_id_idx on orders_2026_q3 orders_19  (cost=0.12..8.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_2026_q4_order_id_idx on orders_2026_q4 orders_20  (cost=0.12..8.14 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+                        ->  Index Only Scan using orders_future_order_id_idx on orders_future orders_21  (cost=0.12..8.14 rows=1 width=4) (actual time=0.009..0.009 rows=0.00 loops=1)
+                              Heap Fetches: 0
+                              Index Searches: 1
+                              Buffers: shared hit=1
+  ->  Append  (cost=0.00..51.42 rows=10 width=76) (actual time=0.082..0.087 rows=1.00 loops=1)
+        Buffers: shared hit=28
+        ->  Seq Scan on orders_before_2025 orders_1  (cost=0.00..0.00 rows=1 width=76) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+        ->  Index Scan using orders_2025_q1_pkey on orders_2025_q1 orders_2  (cost=0.29..8.31 rows=1 width=76) (actual time=0.060..0.060 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=14
+        ->  Index Scan using orders_2025_q2_pkey on orders_2025_q2 orders_3  (cost=0.29..8.31 rows=1 width=76) (actual time=0.005..0.005 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2025_q3_pkey on orders_2025_q3 orders_4  (cost=0.29..8.31 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2025_q4_pkey on orders_2025_q4 orders_5  (cost=0.29..8.31 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2026_q1_pkey on orders_2026_q1 orders_6  (cost=0.29..8.31 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=2
+        ->  Index Scan using orders_2026_q2_pkey on orders_2026_q2 orders_7  (cost=0.29..8.31 rows=1 width=76) (actual time=0.007..0.007 rows=1.00 loops=1)
+              Index Cond: (order_id = (InitPlan 2).col1)
+              Index Searches: 1
+              Buffers: shared hit=5
+        ->  Seq Scan on orders_2026_q3 orders_8  (cost=0.00..1.52 rows=1 width=76) (actual time=0.003..0.003 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+              Buffers: shared hit=1
+        ->  Seq Scan on orders_2026_q4 orders_9  (cost=0.00..0.00 rows=1 width=76) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+        ->  Seq Scan on orders_future orders_10  (cost=0.00..0.00 rows=1 width=76) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: (order_id = (InitPlan 2).col1)
+Planning:
+  Buffers: shared hit=1911
+Planning Time: 3.692 ms
+Execution Time: 0.338 ms

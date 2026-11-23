@@ -1,0 +1,195 @@
+=== R19 run 1 ===
+Sort  (cost=6958.87..6961.22 rows=938 width=46) (actual time=10.834..11.349 rows=937.00 loops=1)
+  Sort Key: (COALESCE(sum(oi.quantity), '0'::bigint)) DESC, p.product_id
+  Sort Method: quicksort  Memory: 86kB
+  Buffers: shared hit=3276 read=1275
+  InitPlan 1
+    ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=4) (actual time=0.005..0.007 rows=1.00 loops=1)
+          Filter: ((category_name)::text = 'Mobiles'::text)
+          Rows Removed by Filter: 39
+          Buffers: shared hit=1
+  ->  Finalize HashAggregate  (cost=6901.69..6911.07 rows=938 width=46) (actual time=10.642..11.188 rows=937.00 loops=1)
+        Group Key: p.product_id
+        Batches: 1  Memory Usage: 185kB
+        Buffers: shared hit=3270 read=1275
+        ->  Gather  (cost=6650.33..6884.81 rows=2251 width=46) (actual time=10.266..10.883 rows=2522.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=3270 read=1275
+              ->  Partial HashAggregate  (cost=5650.33..5659.71 rows=938 width=46) (actual time=8.198..8.242 rows=840.67 loops=3)
+                    Group Key: p.product_id
+                    Batches: 1  Memory Usage: 121kB
+                    Buffers: shared hit=3269 read=1275
+                    Worker 0:  Batches: 1  Memory Usage: 185kB
+                    Worker 1:  Batches: 1  Memory Usage: 185kB
+                    ->  Parallel Hash Right Join  (cost=3098.43..5626.87 rows=3127 width=42) (actual time=3.255..7.952 rows=2570.00 loops=3)
+                          Hash Cond: (o.order_id = oi.order_id)
+                          Buffers: shared hit=3269 read=1275
+                          ->  Parallel Append  (cost=0.00..2327.89 rows=50005 width=12) (actual time=0.061..2.959 rows=40000.00 loops=3)
+                                Buffers: shared hit=1372
+                                ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=12) (actual time=0.059..0.059 rows=0.00 loops=1)
+                                ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=12) (actual time=0.055..0.055 rows=0.00 loops=1)
+                                ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=12) (actual time=0.022..0.022 rows=0.00 loops=1)
+                                ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=12) (actual time=0.024..0.024 rows=0.00 loops=1)
+                                ->  Parallel Seq Scan on orders_2025_q4 o_5  (cost=0.00..349.94 rows=11894 width=12) (actual time=0.007..0.778 rows=20220.00 loops=1)
+                                      Buffers: shared hit=231
+                                ->  Parallel Seq Scan on orders_2025_q3 o_4  (cost=0.00..349.94 rows=11894 width=12) (actual time=0.006..0.786 rows=20219.00 loops=1)
+                                      Buffers: shared hit=231
+                                ->  Parallel Seq Scan on orders_2025_q2 o_3  (cost=0.00..346.65 rows=11765 width=12) (actual time=0.003..0.766 rows=20000.00 loops=1)
+                                      Buffers: shared hit=229
+                                ->  Parallel Seq Scan on orders_2026_q2 o_7  (cost=0.00..346.65 rows=11765 width=12) (actual time=0.003..0.257 rows=6666.67 loops=3)
+                                      Buffers: shared hit=229
+                                ->  Parallel Seq Scan on orders_2025_q1 o_2  (cost=0.00..342.36 rows=11636 width=12) (actual time=0.004..0.421 rows=9890.50 loops=2)
+                                      Buffers: shared hit=226
+                                ->  Parallel Seq Scan on orders_2026_q1 o_6  (cost=0.00..342.35 rows=11635 width=12) (actual time=0.008..0.831 rows=19780.00 loops=1)
+                                      Buffers: shared hit=226
+                          ->  Parallel Hash  (cost=3059.34..3059.34 rows=3127 width=38) (actual time=3.170..3.170 rows=2570.00 loops=3)
+                                Buckets: 8192  Batches: 1  Memory Usage: 704kB
+                                Buffers: shared hit=1897 read=1275
+                                ->  Nested Loop Left Join  (cost=0.83..3059.34 rows=3127 width=38) (actual time=0.747..2.884 rows=2570.00 loops=3)
+                                      Buffers: shared hit=1897 read=1275
+                                      ->  Parallel Index Only Scan using idx_products_status_price on products p  (cost=0.41..1604.51 rows=391 width=30) (actual time=0.706..1.165 rows=312.33 loops=3)
+                                            Filter: (category_id = (InitPlan 1).col1)
+                                            Rows Removed by Filter: 9688
+                                            Heap Fetches: 0
+                                            Index Searches: 1
+                                            Buffers: shared hit=21 read=297
+                                      ->  Index Only Scan using idx_order_items_product on order_items oi  (cost=0.42..3.63 rows=9 width=12) (actual time=0.005..0.005 rows=8.19 loops=937)
+                                            Index Cond: (product_id = p.product_id)
+                                            Heap Fetches: 0
+                                            Index Searches: 937
+                                            Buffers: shared hit=1876 read=978
+Planning:
+  Buffers: shared hit=2162
+Planning Time: 3.227 ms
+Execution Time: 11.432 ms
+=== R19 run 2 ===
+Sort  (cost=6958.87..6961.22 rows=938 width=46) (actual time=8.983..9.438 rows=937.00 loops=1)
+  Sort Key: (COALESCE(sum(oi.quantity), '0'::bigint)) DESC, p.product_id
+  Sort Method: quicksort  Memory: 86kB
+  Buffers: shared hit=4551
+  InitPlan 1
+    ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=4) (actual time=0.005..0.007 rows=1.00 loops=1)
+          Filter: ((category_name)::text = 'Mobiles'::text)
+          Rows Removed by Filter: 39
+          Buffers: shared hit=1
+  ->  Finalize HashAggregate  (cost=6901.69..6911.07 rows=938 width=46) (actual time=8.796..9.280 rows=937.00 loops=1)
+        Group Key: p.product_id
+        Batches: 1  Memory Usage: 185kB
+        Buffers: shared hit=4545
+        ->  Gather  (cost=6650.33..6884.81 rows=2251 width=46) (actual time=8.470..9.015 rows=2514.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=4545
+              ->  Partial HashAggregate  (cost=5650.33..5659.71 rows=938 width=46) (actual time=6.466..6.513 rows=838.00 loops=3)
+                    Group Key: p.product_id
+                    Batches: 1  Memory Usage: 121kB
+                    Buffers: shared hit=4544
+                    Worker 0:  Batches: 1  Memory Usage: 185kB
+                    Worker 1:  Batches: 1  Memory Usage: 185kB
+                    ->  Parallel Hash Right Join  (cost=3098.43..5626.87 rows=3127 width=42) (actual time=1.628..6.240 rows=2570.00 loops=3)
+                          Hash Cond: (o.order_id = oi.order_id)
+                          Buffers: shared hit=4544
+                          ->  Parallel Append  (cost=0.00..2327.89 rows=50005 width=12) (actual time=0.037..2.919 rows=40000.00 loops=3)
+                                Buffers: shared hit=1372
+                                ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=12) (actual time=0.039..0.039 rows=0.00 loops=1)
+                                ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=12) (actual time=0.025..0.025 rows=0.00 loops=1)
+                                ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=12) (actual time=0.020..0.020 rows=0.00 loops=1)
+                                ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=12) (actual time=0.019..0.019 rows=0.00 loops=1)
+                                ->  Parallel Seq Scan on orders_2025_q4 o_5  (cost=0.00..349.94 rows=11894 width=12) (actual time=0.002..0.837 rows=20220.00 loops=1)
+                                      Buffers: shared hit=231
+                                ->  Parallel Seq Scan on orders_2025_q3 o_4  (cost=0.00..349.94 rows=11894 width=12) (actual time=0.002..0.761 rows=20219.00 loops=1)
+                                      Buffers: shared hit=231
+                                ->  Parallel Seq Scan on orders_2025_q2 o_3  (cost=0.00..346.65 rows=11765 width=12) (actual time=0.002..0.259 rows=6666.67 loops=3)
+                                      Buffers: shared hit=229
+                                ->  Parallel Seq Scan on orders_2026_q2 o_7  (cost=0.00..346.65 rows=11765 width=12) (actual time=0.001..0.422 rows=10000.00 loops=2)
+                                      Buffers: shared hit=229
+                                ->  Parallel Seq Scan on orders_2025_q1 o_2  (cost=0.00..342.36 rows=11636 width=12) (actual time=0.002..0.750 rows=19781.00 loops=1)
+                                      Buffers: shared hit=226
+                                ->  Parallel Seq Scan on orders_2026_q1 o_6  (cost=0.00..342.35 rows=11635 width=12) (actual time=0.003..0.747 rows=19780.00 loops=1)
+                                      Buffers: shared hit=226
+                          ->  Parallel Hash  (cost=3059.34..3059.34 rows=3127 width=38) (actual time=1.568..1.569 rows=2570.00 loops=3)
+                                Buckets: 8192  Batches: 1  Memory Usage: 672kB
+                                Buffers: shared hit=3172
+                                ->  Nested Loop Left Join  (cost=0.83..3059.34 rows=3127 width=38) (actual time=0.482..1.343 rows=2570.00 loops=3)
+                                      Buffers: shared hit=3172
+                                      ->  Parallel Index Only Scan using idx_products_status_price on products p  (cost=0.41..1604.51 rows=391 width=30) (actual time=0.453..0.585 rows=312.33 loops=3)
+                                            Filter: (category_id = (InitPlan 1).col1)
+                                            Rows Removed by Filter: 9688
+                                            Heap Fetches: 0
+                                            Index Searches: 1
+                                            Buffers: shared hit=318
+                                      ->  Index Only Scan using idx_order_items_product on order_items oi  (cost=0.42..3.63 rows=9 width=12) (actual time=0.002..0.002 rows=8.19 loops=937)
+                                            Index Cond: (product_id = p.product_id)
+                                            Heap Fetches: 0
+                                            Index Searches: 937
+                                            Buffers: shared hit=2854
+Planning:
+  Buffers: shared hit=2162
+Planning Time: 3.195 ms
+Execution Time: 9.518 ms
+=== R19 run 3 ===
+Sort  (cost=6958.87..6961.22 rows=938 width=46) (actual time=9.154..9.669 rows=937.00 loops=1)
+  Sort Key: (COALESCE(sum(oi.quantity), '0'::bigint)) DESC, p.product_id
+  Sort Method: quicksort  Memory: 86kB
+  Buffers: shared hit=4551
+  InitPlan 1
+    ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=4) (actual time=0.005..0.007 rows=1.00 loops=1)
+          Filter: ((category_name)::text = 'Mobiles'::text)
+          Rows Removed by Filter: 39
+          Buffers: shared hit=1
+  ->  Finalize HashAggregate  (cost=6901.69..6911.07 rows=938 width=46) (actual time=8.962..9.510 rows=937.00 loops=1)
+        Group Key: p.product_id
+        Batches: 1  Memory Usage: 185kB
+        Buffers: shared hit=4545
+        ->  Gather  (cost=6650.33..6884.81 rows=2251 width=46) (actual time=8.635..9.243 rows=2496.00 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=4545
+              ->  Partial HashAggregate  (cost=5650.33..5659.71 rows=938 width=46) (actual time=6.492..6.538 rows=832.00 loops=3)
+                    Group Key: p.product_id
+                    Batches: 1  Memory Usage: 121kB
+                    Buffers: shared hit=4544
+                    Worker 0:  Batches: 1  Memory Usage: 185kB
+                    Worker 1:  Batches: 1  Memory Usage: 185kB
+                    ->  Parallel Hash Right Join  (cost=3098.43..5626.87 rows=3127 width=42) (actual time=1.716..6.260 rows=2570.00 loops=3)
+                          Hash Cond: (o.order_id = oi.order_id)
+                          Buffers: shared hit=4544
+                          ->  Parallel Append  (cost=0.00..2327.89 rows=50005 width=12) (actual time=0.044..2.925 rows=40000.00 loops=3)
+                                Buffers: shared hit=1372
+                                ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=12) (actual time=0.038..0.038 rows=0.00 loops=1)
+                                ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=12) (actual time=0.033..0.033 rows=0.00 loops=1)
+                                ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=12) (actual time=0.021..0.021 rows=0.00 loops=1)
+                                ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=12) (actual time=0.023..0.023 rows=0.00 loops=1)
+                                ->  Parallel Seq Scan on orders_2025_q4 o_5  (cost=0.00..349.94 rows=11894 width=12) (actual time=0.004..0.776 rows=20220.00 loops=1)
+                                      Buffers: shared hit=231
+                                ->  Parallel Seq Scan on orders_2025_q3 o_4  (cost=0.00..349.94 rows=11894 width=12) (actual time=0.004..0.807 rows=20219.00 loops=1)
+                                      Buffers: shared hit=231
+                                ->  Parallel Seq Scan on orders_2025_q2 o_3  (cost=0.00..346.65 rows=11765 width=12) (actual time=0.002..0.262 rows=6666.67 loops=3)
+                                      Buffers: shared hit=229
+                                ->  Parallel Seq Scan on orders_2026_q2 o_7  (cost=0.00..346.65 rows=11765 width=12) (actual time=0.004..0.399 rows=10000.00 loops=2)
+                                      Buffers: shared hit=229
+                                ->  Parallel Seq Scan on orders_2025_q1 o_2  (cost=0.00..342.36 rows=11636 width=12) (actual time=0.003..0.767 rows=19781.00 loops=1)
+                                      Buffers: shared hit=226
+                                ->  Parallel Seq Scan on orders_2026_q1 o_6  (cost=0.00..342.35 rows=11635 width=12) (actual time=0.009..0.759 rows=19780.00 loops=1)
+                                      Buffers: shared hit=226
+                          ->  Parallel Hash  (cost=3059.34..3059.34 rows=3127 width=38) (actual time=1.645..1.645 rows=2570.00 loops=3)
+                                Buckets: 8192  Batches: 1  Memory Usage: 704kB
+                                Buffers: shared hit=3172
+                                ->  Nested Loop Left Join  (cost=0.83..3059.34 rows=3127 width=38) (actual time=0.532..1.423 rows=2570.00 loops=3)
+                                      Buffers: shared hit=3172
+                                      ->  Parallel Index Only Scan using idx_products_status_price on products p  (cost=0.41..1604.51 rows=391 width=30) (actual time=0.509..0.674 rows=312.33 loops=3)
+                                            Filter: (category_id = (InitPlan 1).col1)
+                                            Rows Removed by Filter: 9688
+                                            Heap Fetches: 0
+                                            Index Searches: 1
+                                            Buffers: shared hit=318
+                                      ->  Index Only Scan using idx_order_items_product on order_items oi  (cost=0.42..3.63 rows=9 width=12) (actual time=0.002..0.002 rows=8.19 loops=937)
+                                            Index Cond: (product_id = p.product_id)
+                                            Heap Fetches: 0
+                                            Index Searches: 937
+                                            Buffers: shared hit=2854
+Planning:
+  Buffers: shared hit=2162
+Planning Time: 3.276 ms
+Execution Time: 9.770 ms

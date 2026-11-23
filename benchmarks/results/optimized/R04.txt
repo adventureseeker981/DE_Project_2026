@@ -1,0 +1,159 @@
+=== R04 run 1 ===
+GroupAggregate  (cost=99.06..99.36 rows=10 width=58) (actual time=2.251..2.253 rows=4.00 loops=1)
+  Group Key: o.ordered_at, o.order_id
+  Buffers: shared hit=17 read=18
+  ->  Sort  (cost=99.06..99.11 rows=20 width=54) (actual time=2.248..2.249 rows=6.00 loops=1)
+        Sort Key: o.ordered_at DESC, o.order_id
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=17 read=18
+        ->  Nested Loop  (cost=0.42..98.63 rows=20 width=54) (actual time=0.574..2.238 rows=6.00 loops=1)
+              Buffers: shared hit=11 read=18
+              ->  Append  (cost=0.00..49.88 rows=10 width=50) (actual time=0.187..1.356 rows=4.00 loops=1)
+                    Buffers: shared hit=4 read=12
+                    ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=86) (actual time=0.002..0.002 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+                    ->  Index Scan using orders_2025_q1_customer_id_ordered_at_idx on orders_2025_q1 o_2  (cost=0.29..8.30 rows=1 width=26) (actual time=0.185..0.189 rows=3.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=3 read=2
+                    ->  Index Scan using orders_2025_q2_customer_id_ordered_at_idx on orders_2025_q2 o_3  (cost=0.29..8.30 rows=1 width=26) (actual time=0.230..0.230 rows=1.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=1 read=2
+                    ->  Index Scan using orders_2025_q3_customer_id_ordered_at_idx on orders_2025_q3 o_4  (cost=0.29..8.30 rows=1 width=26) (actual time=0.193..0.193 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared read=2
+                    ->  Index Scan using orders_2025_q4_customer_id_ordered_at_idx on orders_2025_q4 o_5  (cost=0.29..8.30 rows=1 width=26) (actual time=0.258..0.258 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared read=2
+                    ->  Index Scan using orders_2026_q1_customer_id_ordered_at_idx on orders_2026_q1 o_6  (cost=0.29..8.30 rows=1 width=26) (actual time=0.301..0.301 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared read=2
+                    ->  Index Scan using orders_2026_q2_customer_id_ordered_at_idx on orders_2026_q2 o_7  (cost=0.29..8.30 rows=1 width=26) (actual time=0.179..0.179 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared read=2
+                    ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+                    ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+                    ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+              ->  Index Only Scan using pk_order_items on order_items oi  (cost=0.42..4.85 rows=2 width=8) (actual time=0.220..0.220 rows=1.50 loops=4)
+                    Index Cond: (order_id = o.order_id)
+                    Heap Fetches: 0
+                    Index Searches: 4
+                    Buffers: shared hit=7 read=6
+Planning:
+  Buffers: shared hit=1934 read=99
+Planning Time: 9.212 ms
+Execution Time: 2.294 ms
+=== R04 run 2 ===
+GroupAggregate  (cost=99.06..99.36 rows=10 width=58) (actual time=0.051..0.053 rows=4.00 loops=1)
+  Group Key: o.ordered_at, o.order_id
+  Buffers: shared hit=35
+  ->  Sort  (cost=99.06..99.11 rows=20 width=54) (actual time=0.048..0.048 rows=6.00 loops=1)
+        Sort Key: o.ordered_at DESC, o.order_id
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=35
+        ->  Nested Loop  (cost=0.42..98.63 rows=20 width=54) (actual time=0.012..0.041 rows=6.00 loops=1)
+              Buffers: shared hit=29
+              ->  Append  (cost=0.00..49.88 rows=10 width=50) (actual time=0.006..0.030 rows=4.00 loops=1)
+                    Buffers: shared hit=16
+                    ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+                    ->  Index Scan using orders_2025_q1_customer_id_ordered_at_idx on orders_2025_q1 o_2  (cost=0.29..8.30 rows=1 width=26) (actual time=0.004..0.007 rows=3.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=5
+                    ->  Index Scan using orders_2025_q2_customer_id_ordered_at_idx on orders_2025_q2 o_3  (cost=0.29..8.30 rows=1 width=26) (actual time=0.005..0.005 rows=1.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=3
+                    ->  Index Scan using orders_2025_q3_customer_id_ordered_at_idx on orders_2025_q3 o_4  (cost=0.29..8.30 rows=1 width=26) (actual time=0.003..0.003 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=2
+                    ->  Index Scan using orders_2025_q4_customer_id_ordered_at_idx on orders_2025_q4 o_5  (cost=0.29..8.30 rows=1 width=26) (actual time=0.003..0.003 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=2
+                    ->  Index Scan using orders_2026_q1_customer_id_ordered_at_idx on orders_2026_q1 o_6  (cost=0.29..8.30 rows=1 width=26) (actual time=0.004..0.004 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=2
+                    ->  Index Scan using orders_2026_q2_customer_id_ordered_at_idx on orders_2026_q2 o_7  (cost=0.29..8.30 rows=1 width=26) (actual time=0.004..0.005 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=2
+                    ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+                    ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+                    ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=86) (actual time=0.000..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+              ->  Index Only Scan using pk_order_items on order_items oi  (cost=0.42..4.85 rows=2 width=8) (actual time=0.002..0.003 rows=1.50 loops=4)
+                    Index Cond: (order_id = o.order_id)
+                    Heap Fetches: 0
+                    Index Searches: 4
+                    Buffers: shared hit=13
+Planning:
+  Buffers: shared hit=1999
+Planning Time: 3.011 ms
+Execution Time: 0.090 ms
+=== R04 run 3 ===
+GroupAggregate  (cost=99.06..99.36 rows=10 width=58) (actual time=0.050..0.052 rows=4.00 loops=1)
+  Group Key: o.ordered_at, o.order_id
+  Buffers: shared hit=35
+  ->  Sort  (cost=99.06..99.11 rows=20 width=54) (actual time=0.048..0.048 rows=6.00 loops=1)
+        Sort Key: o.ordered_at DESC, o.order_id
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=35
+        ->  Nested Loop  (cost=0.42..98.63 rows=20 width=54) (actual time=0.012..0.041 rows=6.00 loops=1)
+              Buffers: shared hit=29
+              ->  Append  (cost=0.00..49.88 rows=10 width=50) (actual time=0.005..0.030 rows=4.00 loops=1)
+                    Buffers: shared hit=16
+                    ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+                    ->  Index Scan using orders_2025_q1_customer_id_ordered_at_idx on orders_2025_q1 o_2  (cost=0.29..8.30 rows=1 width=26) (actual time=0.004..0.007 rows=3.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=5
+                    ->  Index Scan using orders_2025_q2_customer_id_ordered_at_idx on orders_2025_q2 o_3  (cost=0.29..8.30 rows=1 width=26) (actual time=0.005..0.005 rows=1.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=3
+                    ->  Index Scan using orders_2025_q3_customer_id_ordered_at_idx on orders_2025_q3 o_4  (cost=0.29..8.30 rows=1 width=26) (actual time=0.003..0.003 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=2
+                    ->  Index Scan using orders_2025_q4_customer_id_ordered_at_idx on orders_2025_q4 o_5  (cost=0.29..8.30 rows=1 width=26) (actual time=0.003..0.003 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=2
+                    ->  Index Scan using orders_2026_q1_customer_id_ordered_at_idx on orders_2026_q1 o_6  (cost=0.29..8.30 rows=1 width=26) (actual time=0.004..0.004 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=2
+                    ->  Index Scan using orders_2026_q2_customer_id_ordered_at_idx on orders_2026_q2 o_7  (cost=0.29..8.30 rows=1 width=26) (actual time=0.004..0.004 rows=0.00 loops=1)
+                          Index Cond: (customer_id = 1042)
+                          Index Searches: 1
+                          Buffers: shared hit=2
+                    ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+                    ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+                    ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=86) (actual time=0.001..0.001 rows=0.00 loops=1)
+                          Filter: (customer_id = 1042)
+              ->  Index Only Scan using pk_order_items on order_items oi  (cost=0.42..4.85 rows=2 width=8) (actual time=0.002..0.002 rows=1.50 loops=4)
+                    Index Cond: (order_id = o.order_id)
+                    Heap Fetches: 0
+                    Index Searches: 4
+                    Buffers: shared hit=13
+Planning:
+  Buffers: shared hit=1999
+Planning Time: 2.989 ms
+Execution Time: 0.089 ms

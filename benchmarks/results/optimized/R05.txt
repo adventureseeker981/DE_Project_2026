@@ -1,0 +1,129 @@
+=== R05 run 1 ===
+Sort  (cost=136.16..137.95 rows=714 width=16) (actual time=0.373..0.379 rows=356.00 loops=1)
+  Sort Key: orders.shipped_at
+  Sort Method: quicksort  Memory: 36kB
+  Buffers: shared hit=317 read=7
+  ->  Append  (cost=0.00..102.32 rows=714 width=16) (actual time=0.018..0.355 rows=356.00 loops=1)
+        Buffers: shared hit=314 read=7
+        ->  Seq Scan on orders_before_2025 orders_1  (cost=0.00..0.00 rows=1 width=16) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        ->  Index Scan using orders_2025_q1_shipped_at_idx1 on orders_2025_q1 orders_2  (cost=0.14..13.20 rows=58 width=16) (actual time=0.016..0.068 rows=66.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=57 read=1
+        ->  Index Scan using orders_2025_q2_shipped_at_idx1 on orders_2025_q2 orders_3  (cost=0.14..13.03 rows=49 width=16) (actual time=0.006..0.054 rows=55.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=50 read=1
+        ->  Index Scan using orders_2025_q3_shipped_at_idx1 on orders_2025_q3 orders_4  (cost=0.14..13.16 rows=56 width=16) (actual time=0.007..0.056 rows=63.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=55 read=1
+        ->  Index Scan using orders_2025_q4_shipped_at_idx1 on orders_2025_q4 orders_5  (cost=0.14..12.99 rows=47 width=16) (actual time=0.005..0.049 rows=53.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=48 read=1
+        ->  Index Scan using orders_2026_q1_shipped_at_idx1 on orders_2026_q1 orders_6  (cost=0.14..13.16 rows=56 width=16) (actual time=0.014..0.060 rows=63.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=55 read=1
+        ->  Index Scan using orders_2026_q2_shipped_at_idx1 on orders_2026_q2 orders_7  (cost=0.28..33.22 rows=444 width=16) (actual time=0.009..0.050 rows=56.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=49 read=2
+        ->  Seq Scan on orders_2026_q3 orders_8  (cost=0.00..0.00 rows=1 width=16) (actual time=0.002..0.002 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        ->  Seq Scan on orders_2026_q4 orders_9  (cost=0.00..0.00 rows=1 width=16) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        ->  Seq Scan on orders_future orders_10  (cost=0.00..0.00 rows=1 width=16) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+Planning:
+  Buffers: shared hit=1846
+Planning Time: 3.113 ms
+Execution Time: 0.409 ms
+=== R05 run 2 ===
+Sort  (cost=136.16..137.95 rows=714 width=16) (actual time=0.310..0.317 rows=356.00 loops=1)
+  Sort Key: orders.shipped_at
+  Sort Method: quicksort  Memory: 36kB
+  Buffers: shared hit=324
+  ->  Append  (cost=0.00..102.32 rows=714 width=16) (actual time=0.005..0.293 rows=356.00 loops=1)
+        Buffers: shared hit=321
+        ->  Seq Scan on orders_before_2025 orders_1  (cost=0.00..0.00 rows=1 width=16) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        ->  Index Scan using orders_2025_q1_shipped_at_idx1 on orders_2025_q1 orders_2  (cost=0.14..13.20 rows=58 width=16) (actual time=0.003..0.048 rows=66.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=58
+        ->  Index Scan using orders_2025_q2_shipped_at_idx1 on orders_2025_q2 orders_3  (cost=0.14..13.03 rows=49 width=16) (actual time=0.004..0.045 rows=55.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=51
+        ->  Index Scan using orders_2025_q3_shipped_at_idx1 on orders_2025_q3 orders_4  (cost=0.14..13.16 rows=56 width=16) (actual time=0.004..0.050 rows=63.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=56
+        ->  Index Scan using orders_2025_q4_shipped_at_idx1 on orders_2025_q4 orders_5  (cost=0.14..12.99 rows=47 width=16) (actual time=0.003..0.043 rows=53.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=49
+        ->  Index Scan using orders_2026_q1_shipped_at_idx1 on orders_2026_q1 orders_6  (cost=0.14..13.16 rows=56 width=16) (actual time=0.004..0.047 rows=63.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=56
+        ->  Index Scan using orders_2026_q2_shipped_at_idx1 on orders_2026_q2 orders_7  (cost=0.28..33.22 rows=444 width=16) (actual time=0.005..0.043 rows=56.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=51
+        ->  Seq Scan on orders_2026_q3 orders_8  (cost=0.00..0.00 rows=1 width=16) (actual time=0.002..0.002 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        ->  Seq Scan on orders_2026_q4 orders_9  (cost=0.00..0.00 rows=1 width=16) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        ->  Seq Scan on orders_future orders_10  (cost=0.00..0.00 rows=1 width=16) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+Planning:
+  Buffers: shared hit=1842
+Planning Time: 2.926 ms
+Execution Time: 0.343 ms
+=== R05 run 3 ===
+Sort  (cost=136.16..137.95 rows=714 width=16) (actual time=0.319..0.325 rows=356.00 loops=1)
+  Sort Key: orders.shipped_at
+  Sort Method: quicksort  Memory: 36kB
+  Buffers: shared hit=324
+  ->  Append  (cost=0.00..102.32 rows=714 width=16) (actual time=0.005..0.300 rows=356.00 loops=1)
+        Buffers: shared hit=321
+        ->  Seq Scan on orders_before_2025 orders_1  (cost=0.00..0.00 rows=1 width=16) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        ->  Index Scan using orders_2025_q1_shipped_at_idx1 on orders_2025_q1 orders_2  (cost=0.14..13.20 rows=58 width=16) (actual time=0.003..0.051 rows=66.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=58
+        ->  Index Scan using orders_2025_q2_shipped_at_idx1 on orders_2025_q2 orders_3  (cost=0.14..13.03 rows=49 width=16) (actual time=0.004..0.048 rows=55.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=51
+        ->  Index Scan using orders_2025_q3_shipped_at_idx1 on orders_2025_q3 orders_4  (cost=0.14..13.16 rows=56 width=16) (actual time=0.004..0.051 rows=63.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=56
+        ->  Index Scan using orders_2025_q4_shipped_at_idx1 on orders_2025_q4 orders_5  (cost=0.14..12.99 rows=47 width=16) (actual time=0.003..0.045 rows=53.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=49
+        ->  Index Scan using orders_2026_q1_shipped_at_idx1 on orders_2026_q1 orders_6  (cost=0.14..13.16 rows=56 width=16) (actual time=0.004..0.046 rows=63.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=56
+        ->  Index Scan using orders_2026_q2_shipped_at_idx1 on orders_2026_q2 orders_7  (cost=0.28..33.22 rows=444 width=16) (actual time=0.005..0.042 rows=56.00 loops=1)
+              Index Cond: (shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone)
+              Index Searches: 1
+              Buffers: shared hit=51
+        ->  Seq Scan on orders_2026_q3 orders_8  (cost=0.00..0.00 rows=1 width=16) (actual time=0.002..0.002 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        ->  Seq Scan on orders_2026_q4 orders_9  (cost=0.00..0.00 rows=1 width=16) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+        ->  Seq Scan on orders_future orders_10  (cost=0.00..0.00 rows=1 width=16) (actual time=0.001..0.001 rows=0.00 loops=1)
+              Filter: ((shipped_at < '2026-06-20 00:00:00+05:30'::timestamp with time zone) AND ((status)::text = 'SHIPPED'::text))
+Planning:
+  Buffers: shared hit=1842
+Planning Time: 3.126 ms
+Execution Time: 0.352 ms

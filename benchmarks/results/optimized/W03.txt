@@ -1,0 +1,57 @@
+=== W03 run 1 ===
+Update on products p  (cost=0.29..43.66 rows=0 width=0) (actual time=0.537..0.537 rows=0.00 loops=1)
+  Buffers: shared hit=85 read=1 dirtied=2
+  ->  Nested Loop  (cost=0.29..43.66 rows=1 width=28) (actual time=0.015..0.021 rows=1.00 loops=1)
+        Join Filter: (p.category_id = c.category_id)
+        Rows Removed by Join Filter: 19
+        Buffers: shared hit=9
+        ->  Seq Scan on categories c  (cost=0.00..1.50 rows=1 width=10) (actual time=0.004..0.005 rows=1.00 loops=1)
+              Filter: ((category_name)::text = 'Watches'::text)
+              Rows Removed by Filter: 39
+              Buffers: shared hit=1
+        ->  Index Scan using idx_products_seller_stock on products p  (cost=0.29..41.90 rows=20 width=15) (actual time=0.008..0.012 rows=20.00 loops=1)
+              Index Cond: (seller_id = 217)
+              Index Searches: 1
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=369
+Planning Time: 0.485 ms
+Execution Time: 0.586 ms
+=== W03 run 2 ===
+Update on products p  (cost=0.29..43.66 rows=0 width=0) (actual time=0.587..0.587 rows=0.00 loops=1)
+  Buffers: shared hit=88
+  ->  Nested Loop  (cost=0.29..43.66 rows=1 width=28) (actual time=0.023..0.029 rows=1.00 loops=1)
+        Join Filter: (p.category_id = c.category_id)
+        Rows Removed by Join Filter: 19
+        Buffers: shared hit=9
+        ->  Seq Scan on categories c  (cost=0.00..1.50 rows=1 width=10) (actual time=0.005..0.005 rows=1.00 loops=1)
+              Filter: ((category_name)::text = 'Watches'::text)
+              Rows Removed by Filter: 39
+              Buffers: shared hit=1
+        ->  Index Scan using idx_products_seller_stock on products p  (cost=0.29..41.90 rows=20 width=15) (actual time=0.015..0.020 rows=20.00 loops=1)
+              Index Cond: (seller_id = 217)
+              Index Searches: 1
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=369
+Planning Time: 0.525 ms
+Execution Time: 0.639 ms
+=== W03 run 3 ===
+Update on products p  (cost=0.29..43.66 rows=0 width=0) (actual time=0.587..0.587 rows=0.00 loops=1)
+  Buffers: shared hit=93 dirtied=1
+  ->  Nested Loop  (cost=0.29..43.66 rows=1 width=28) (actual time=0.022..0.028 rows=1.00 loops=1)
+        Join Filter: (p.category_id = c.category_id)
+        Rows Removed by Join Filter: 19
+        Buffers: shared hit=9
+        ->  Seq Scan on categories c  (cost=0.00..1.50 rows=1 width=10) (actual time=0.004..0.005 rows=1.00 loops=1)
+              Filter: ((category_name)::text = 'Watches'::text)
+              Rows Removed by Filter: 39
+              Buffers: shared hit=1
+        ->  Index Scan using idx_products_seller_stock on products p  (cost=0.29..41.90 rows=20 width=15) (actual time=0.015..0.019 rows=20.00 loops=1)
+              Index Cond: (seller_id = 217)
+              Index Searches: 1
+              Buffers: shared hit=8
+Planning:
+  Buffers: shared hit=369
+Planning Time: 0.461 ms
+Execution Time: 0.636 ms

@@ -1,0 +1,105 @@
+=== R02 run 1 ===
+Limit  (cost=27.07..544.91 rows=48 width=35) (actual time=0.099..0.764 rows=48.00 loops=1)
+  Buffers: shared hit=4 read=18
+  CTE tree
+    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=4) (actual time=0.006..0.028 rows=5.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=3
+          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=4) (actual time=0.005..0.007 rows=1.00 loops=1)
+                Filter: ((category_name)::text = 'Electronics'::text)
+                Rows Removed by Filter: 39
+                Buffers: shared hit=1
+          ->  Hash Join  (cost=0.33..2.20 rows=32 width=4) (actual time=0.008..0.009 rows=2.00 loops=2)
+                Hash Cond: (c.parent_category_id = t.category_id)
+                Buffers: shared hit=2
+                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=8) (actual time=0.001..0.002 rows=40.00 loops=2)
+                      Buffers: shared hit=2
+                ->  Hash  (cost=0.20..0.20 rows=10 width=4) (actual time=0.002..0.002 rows=2.50 loops=2)
+                      Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                      ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=4) (actual time=0.000..0.000 rows=2.50 loops=2)
+  ->  Nested Loop Semi Join  (cost=0.41..51977.90 rows=4818 width=35) (actual time=0.099..0.760 rows=48.00 loops=1)
+        Join Filter: (p.category_id = tree.category_id)
+        Rows Removed by Join Filter: 6934
+        Buffers: shared hit=4 read=18
+        ->  Index Only Scan using idx_products_status_price on products p  (cost=0.41..652.79 rows=9635 width=39) (actual time=0.067..0.184 rows=1406.00 loops=1)
+              Index Cond: ((status = 'ACTIVE'::text) AND (price >= '1000'::numeric) AND (price <= '5000'::numeric))
+              Heap Fetches: 0
+              Index Searches: 1
+              Buffers: shared hit=1 read=18
+        ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=4) (actual time=0.000..0.000 rows=4.97 loops=1406)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=404 read=3
+Planning Time: 1.114 ms
+Execution Time: 0.802 ms
+=== R02 run 2 ===
+Limit  (cost=27.07..544.91 rows=48 width=35) (actual time=0.060..0.712 rows=48.00 loops=1)
+  Buffers: shared hit=22
+  CTE tree
+    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=4) (actual time=0.005..0.024 rows=5.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=3
+          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=4) (actual time=0.004..0.006 rows=1.00 loops=1)
+                Filter: ((category_name)::text = 'Electronics'::text)
+                Rows Removed by Filter: 39
+                Buffers: shared hit=1
+          ->  Hash Join  (cost=0.33..2.20 rows=32 width=4) (actual time=0.006..0.007 rows=2.00 loops=2)
+                Hash Cond: (c.parent_category_id = t.category_id)
+                Buffers: shared hit=2
+                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=8) (actual time=0.001..0.002 rows=40.00 loops=2)
+                      Buffers: shared hit=2
+                ->  Hash  (cost=0.20..0.20 rows=10 width=4) (actual time=0.002..0.002 rows=2.50 loops=2)
+                      Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                      ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=4) (actual time=0.000..0.000 rows=2.50 loops=2)
+  ->  Nested Loop Semi Join  (cost=0.41..51977.90 rows=4818 width=35) (actual time=0.059..0.707 rows=48.00 loops=1)
+        Join Filter: (p.category_id = tree.category_id)
+        Rows Removed by Join Filter: 6934
+        Buffers: shared hit=22
+        ->  Index Only Scan using idx_products_status_price on products p  (cost=0.41..652.79 rows=9635 width=39) (actual time=0.033..0.165 rows=1406.00 loops=1)
+              Index Cond: ((status = 'ACTIVE'::text) AND (price >= '1000'::numeric) AND (price <= '5000'::numeric))
+              Heap Fetches: 0
+              Index Searches: 1
+              Buffers: shared hit=19
+        ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=4) (actual time=0.000..0.000 rows=4.97 loops=1406)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=407
+Planning Time: 0.796 ms
+Execution Time: 0.744 ms
+=== R02 run 3 ===
+Limit  (cost=27.07..544.91 rows=48 width=35) (actual time=0.066..0.541 rows=48.00 loops=1)
+  Buffers: shared hit=22
+  CTE tree
+    ->  Recursive Union  (cost=0.00..26.66 rows=321 width=4) (actual time=0.008..0.029 rows=5.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=3
+          ->  Seq Scan on categories  (cost=0.00..1.50 rows=1 width=4) (actual time=0.007..0.008 rows=1.00 loops=1)
+                Filter: ((category_name)::text = 'Electronics'::text)
+                Rows Removed by Filter: 39
+                Buffers: shared hit=1
+          ->  Hash Join  (cost=0.33..2.20 rows=32 width=4) (actual time=0.007..0.008 rows=2.00 loops=2)
+                Hash Cond: (c.parent_category_id = t.category_id)
+                Buffers: shared hit=2
+                ->  Seq Scan on categories c  (cost=0.00..1.40 rows=40 width=8) (actual time=0.001..0.001 rows=40.00 loops=2)
+                      Buffers: shared hit=2
+                ->  Hash  (cost=0.20..0.20 rows=10 width=4) (actual time=0.003..0.003 rows=2.50 loops=2)
+                      Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                      ->  WorkTable Scan on tree t  (cost=0.00..0.20 rows=10 width=4) (actual time=0.000..0.000 rows=2.50 loops=2)
+  ->  Nested Loop Semi Join  (cost=0.41..51977.90 rows=4818 width=35) (actual time=0.065..0.537 rows=48.00 loops=1)
+        Join Filter: (p.category_id = tree.category_id)
+        Rows Removed by Join Filter: 6934
+        Buffers: shared hit=22
+        ->  Index Only Scan using idx_products_status_price on products p  (cost=0.41..652.79 rows=9635 width=39) (actual time=0.034..0.109 rows=1406.00 loops=1)
+              Index Cond: ((status = 'ACTIVE'::text) AND (price >= '1000'::numeric) AND (price <= '5000'::numeric))
+              Heap Fetches: 0
+              Index Searches: 1
+              Buffers: shared hit=19
+        ->  CTE Scan on tree  (cost=0.00..6.42 rows=321 width=4) (actual time=0.000..0.000 rows=4.97 loops=1406)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=407
+Planning Time: 0.781 ms
+Execution Time: 0.581 ms

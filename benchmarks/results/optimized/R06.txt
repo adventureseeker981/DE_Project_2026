@@ -1,0 +1,72 @@
+=== R06 run 1 ===
+Sort  (cost=333.54..333.56 rows=10 width=25) (actual time=1.248..1.249 rows=1.00 loops=1)
+  Sort Key: o.ordered_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=83 read=22
+  ->  Hash Join  (cost=13.45..333.37 rows=10 width=25) (actual time=0.446..1.241 rows=1.00 loops=1)
+        Hash Cond: (o.order_id = oi.order_id)
+        Buffers: shared hit=80 read=22
+        ->  Index Scan Backward using orders_2026_q2_ordered_at_idx1 on orders_2026_q2 o  (cost=0.29..287.15 rows=6593 width=12) (actual time=0.102..1.034 rows=6593.00 loops=1)
+              Index Cond: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (ordered_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+              Index Searches: 1
+              Buffers: shared hit=79 read=18
+        ->  Hash  (cost=11.18..11.18 rows=158 width=17) (actual time=0.035..0.035 rows=142.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 16kB
+              Buffers: shared hit=1 read=4
+              ->  Index Only Scan using idx_order_items_seller on order_items oi  (cost=0.42..11.18 rows=158 width=17) (actual time=0.015..0.023 rows=142.00 loops=1)
+                    Index Cond: (seller_id = 217)
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=1 read=4
+Planning:
+  Buffers: shared hit=638 read=2
+Planning Time: 1.032 ms
+Execution Time: 1.264 ms
+=== R06 run 2 ===
+Sort  (cost=333.54..333.56 rows=10 width=25) (actual time=0.591..0.591 rows=1.00 loops=1)
+  Sort Key: o.ordered_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=105
+  ->  Hash Join  (cost=13.45..333.37 rows=10 width=25) (actual time=0.132..0.584 rows=1.00 loops=1)
+        Hash Cond: (o.order_id = oi.order_id)
+        Buffers: shared hit=102
+        ->  Index Scan Backward using orders_2026_q2_ordered_at_idx1 on orders_2026_q2 o  (cost=0.29..287.15 rows=6593 width=12) (actual time=0.003..0.411 rows=6593.00 loops=1)
+              Index Cond: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (ordered_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+              Index Searches: 1
+              Buffers: shared hit=97
+        ->  Hash  (cost=11.18..11.18 rows=158 width=17) (actual time=0.022..0.022 rows=142.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 16kB
+              Buffers: shared hit=5
+              ->  Index Only Scan using idx_order_items_seller on order_items oi  (cost=0.42..11.18 rows=158 width=17) (actual time=0.005..0.014 rows=142.00 loops=1)
+                    Index Cond: (seller_id = 217)
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=638
+Planning Time: 0.940 ms
+Execution Time: 0.609 ms
+=== R06 run 3 ===
+Sort  (cost=333.54..333.56 rows=10 width=25) (actual time=0.601..0.601 rows=1.00 loops=1)
+  Sort Key: o.ordered_at
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=105
+  ->  Hash Join  (cost=13.45..333.37 rows=10 width=25) (actual time=0.118..0.593 rows=1.00 loops=1)
+        Hash Cond: (o.order_id = oi.order_id)
+        Buffers: shared hit=102
+        ->  Index Scan Backward using orders_2026_q2_ordered_at_idx1 on orders_2026_q2 o  (cost=0.29..287.15 rows=6593 width=12) (actual time=0.003..0.418 rows=6593.00 loops=1)
+              Index Cond: ((ordered_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (ordered_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+              Index Searches: 1
+              Buffers: shared hit=97
+        ->  Hash  (cost=11.18..11.18 rows=158 width=17) (actual time=0.023..0.023 rows=142.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 16kB
+              Buffers: shared hit=5
+              ->  Index Only Scan using idx_order_items_seller on order_items oi  (cost=0.42..11.18 rows=158 width=17) (actual time=0.006..0.014 rows=142.00 loops=1)
+                    Index Cond: (seller_id = 217)
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=638
+Planning Time: 0.832 ms
+Execution Time: 0.616 ms

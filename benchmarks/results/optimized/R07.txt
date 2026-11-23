@@ -1,0 +1,33 @@
+=== R07 run 1 ===
+Index Only Scan using idx_products_seller_stock on products  (cost=0.29..8.36 rows=3 width=41) (actual time=0.052..0.053 rows=3.00 loops=1)
+  Index Cond: ((seller_id = 217) AND (stock_qty <= 20))
+  Filter: ((status)::text = ANY ('{ACTIVE,OUT_OF_STOCK}'::text[]))
+  Heap Fetches: 0
+  Index Searches: 1
+  Buffers: shared hit=1 read=2
+Planning:
+  Buffers: shared hit=301
+Planning Time: 0.669 ms
+Execution Time: 0.065 ms
+=== R07 run 2 ===
+Index Only Scan using idx_products_seller_stock on products  (cost=0.29..8.36 rows=3 width=41) (actual time=0.024..0.024 rows=3.00 loops=1)
+  Index Cond: ((seller_id = 217) AND (stock_qty <= 20))
+  Filter: ((status)::text = ANY ('{ACTIVE,OUT_OF_STOCK}'::text[]))
+  Heap Fetches: 0
+  Index Searches: 1
+  Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=299
+Planning Time: 0.345 ms
+Execution Time: 0.033 ms
+=== R07 run 3 ===
+Index Only Scan using idx_products_seller_stock on products  (cost=0.29..8.36 rows=3 width=41) (actual time=0.024..0.024 rows=3.00 loops=1)
+  Index Cond: ((seller_id = 217) AND (stock_qty <= 20))
+  Filter: ((status)::text = ANY ('{ACTIVE,OUT_OF_STOCK}'::text[]))
+  Heap Fetches: 0
+  Index Searches: 1
+  Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=299
+Planning Time: 0.349 ms
+Execution Time: 0.034 ms

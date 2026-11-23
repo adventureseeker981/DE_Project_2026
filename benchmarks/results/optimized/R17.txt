@@ -1,0 +1,189 @@
+=== R17 run 1 ===
+Gather  (cost=5634.47..12082.41 rows=1 width=12) (actual time=25.078..26.384 rows=1000.00 loops=1)
+  Workers Planned: 2
+  Workers Launched: 2
+  Buffers: shared hit=4921 read=188
+  ->  Parallel Hash Right Anti Join  (cost=4634.47..11082.31 rows=1 width=12) (actual time=22.941..23.122 rows=333.33 loops=3)
+        Hash Cond: ((o.customer_id = r.customer_id) AND (oi.product_id = r.product_id))
+        Buffers: shared hit=4921 read=188
+        ->  Parallel Hash Join  (cost=3061.21..8356.43 rows=92208 width=8) (actual time=6.131..16.292 rows=73767.33 loops=3)
+              Hash Cond: (oi.order_id = o.order_id)
+              Buffers: shared hit=4914
+              ->  Parallel Seq Scan on order_items oi  (cost=0.00..4536.00 rows=100000 width=8) (actual time=0.498..2.667 rows=80000.00 loops=3)
+                    Buffers: shared hit=3536
+              ->  Parallel Hash  (cost=2484.87..2484.87 rows=46107 width=8) (actual time=5.578..5.581 rows=36882.00 loops=3)
+                    Buckets: 131072  Batches: 1  Memory Usage: 5408kB
+                    Buffers: shared hit=1378
+                    ->  Parallel Append  (cost=0.00..2484.87 rows=46107 width=8) (actual time=0.050..3.766 rows=36882.00 loops=3)
+                          Buffers: shared hit=1378
+                          ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=8) (actual time=0.036..0.036 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=8) (actual time=0.036..0.036 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=8) (actual time=0.019..0.019 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=8) (actual time=0.021..0.021 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Parallel Seq Scan on orders_2025_q4 o_5  (cost=0.00..379.68 rows=11031 width=8) (actual time=0.012..1.276 rows=18753.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1467
+                                Buffers: shared hit=234
+                          ->  Parallel Seq Scan on orders_2025_q3 o_4  (cost=0.00..379.67 rows=11036 width=8) (actual time=0.014..1.238 rows=18761.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1458
+                                Buffers: shared hit=234
+                          ->  Parallel Seq Scan on orders_2025_q2 o_3  (cost=0.00..376.06 rows=10946 width=8) (actual time=0.002..1.215 rows=18608.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1392
+                                Buffers: shared hit=229
+                          ->  Parallel Seq Scan on orders_2026_q2 o_7  (cost=0.00..376.06 rows=10426 width=8) (actual time=0.002..0.417 rows=5908.00 loops=3)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 759
+                                Buffers: shared hit=229
+                          ->  Parallel Seq Scan on orders_2025_q1 o_2  (cost=0.00..371.45 rows=10808 width=8) (actual time=0.003..0.635 rows=9187.00 loops=2)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 704
+                                Buffers: shared hit=226
+                          ->  Parallel Seq Scan on orders_2026_q1 o_6  (cost=0.00..371.44 rows=10839 width=8) (actual time=0.011..1.296 rows=18426.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1354
+                                Buffers: shared hit=226
+        ->  Parallel Hash  (cost=1350.33..1350.33 rows=14862 width=12) (actual time=2.179..2.179 rows=11887.33 loops=3)
+              Buckets: 65536  Batches: 1  Memory Usage: 2208kB
+              Buffers: shared hit=7 read=188
+              ->  Parallel Index Only Scan using idx_reviews_product_rating on product_reviews r  (cost=0.29..1350.33 rows=14862 width=12) (actual time=0.046..1.198 rows=11887.33 loops=3)
+                    Filter: verified_purchase
+                    Rows Removed by Filter: 1000
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=7 read=188
+Planning:
+  Buffers: shared hit=2170
+Planning Time: 3.967 ms
+Execution Time: 26.454 ms
+=== R17 run 2 ===
+Gather  (cost=5634.47..12082.41 rows=1 width=12) (actual time=23.996..25.330 rows=1000.00 loops=1)
+  Workers Planned: 2
+  Workers Launched: 2
+  Buffers: shared hit=5109
+  ->  Parallel Hash Right Anti Join  (cost=4634.47..11082.31 rows=1 width=12) (actual time=21.790..21.950 rows=333.33 loops=3)
+        Hash Cond: ((o.customer_id = r.customer_id) AND (oi.product_id = r.product_id))
+        Buffers: shared hit=5109
+        ->  Parallel Hash Join  (cost=3061.21..8356.43 rows=92208 width=8) (actual time=6.509..16.093 rows=73767.33 loops=3)
+              Hash Cond: (oi.order_id = o.order_id)
+              Buffers: shared hit=4914
+              ->  Parallel Seq Scan on order_items oi  (cost=0.00..4536.00 rows=100000 width=8) (actual time=0.668..2.768 rows=80000.00 loops=3)
+                    Buffers: shared hit=3536
+              ->  Parallel Hash  (cost=2484.87..2484.87 rows=46107 width=8) (actual time=5.781..5.784 rows=36882.00 loops=3)
+                    Buckets: 131072  Batches: 1  Memory Usage: 5408kB
+                    Buffers: shared hit=1378
+                    ->  Parallel Append  (cost=0.00..2484.87 rows=46107 width=8) (actual time=0.039..3.759 rows=36882.00 loops=3)
+                          Buffers: shared hit=1378
+                          ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=8) (actual time=0.023..0.023 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=8) (actual time=0.029..0.029 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=8) (actual time=0.021..0.021 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=8) (actual time=0.018..0.018 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Parallel Seq Scan on orders_2025_q4 o_5  (cost=0.00..379.68 rows=11031 width=8) (actual time=0.007..1.277 rows=18753.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1467
+                                Buffers: shared hit=234
+                          ->  Parallel Seq Scan on orders_2025_q3 o_4  (cost=0.00..379.67 rows=11036 width=8) (actual time=0.010..1.259 rows=18761.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1458
+                                Buffers: shared hit=234
+                          ->  Parallel Seq Scan on orders_2025_q2 o_3  (cost=0.00..376.06 rows=10946 width=8) (actual time=0.002..1.302 rows=18608.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1392
+                                Buffers: shared hit=229
+                          ->  Parallel Seq Scan on orders_2026_q2 o_7  (cost=0.00..376.06 rows=10426 width=8) (actual time=0.001..1.237 rows=17724.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 2276
+                                Buffers: shared hit=229
+                          ->  Parallel Seq Scan on orders_2025_q1 o_2  (cost=0.00..371.45 rows=10808 width=8) (actual time=0.003..0.413 rows=6124.67 loops=3)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 469
+                                Buffers: shared hit=226
+                          ->  Parallel Seq Scan on orders_2026_q1 o_6  (cost=0.00..371.44 rows=10839 width=8) (actual time=0.007..1.227 rows=18426.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1354
+                                Buffers: shared hit=226
+        ->  Parallel Hash  (cost=1350.33..1350.33 rows=14862 width=12) (actual time=1.496..1.496 rows=11887.33 loops=3)
+              Buckets: 65536  Batches: 1  Memory Usage: 2208kB
+              Buffers: shared hit=195
+              ->  Parallel Index Only Scan using idx_reviews_product_rating on product_reviews r  (cost=0.29..1350.33 rows=14862 width=12) (actual time=0.029..0.726 rows=11887.33 loops=3)
+                    Filter: verified_purchase
+                    Rows Removed by Filter: 1000
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=195
+Planning:
+  Buffers: shared hit=2170
+Planning Time: 3.376 ms
+Execution Time: 25.403 ms
+=== R17 run 3 ===
+Gather  (cost=5634.47..12082.41 rows=1 width=12) (actual time=24.907..26.116 rows=1000.00 loops=1)
+  Workers Planned: 2
+  Workers Launched: 2
+  Buffers: shared hit=5109
+  ->  Parallel Hash Right Anti Join  (cost=4634.47..11082.31 rows=1 width=12) (actual time=22.925..23.115 rows=333.33 loops=3)
+        Hash Cond: ((o.customer_id = r.customer_id) AND (oi.product_id = r.product_id))
+        Buffers: shared hit=5109
+        ->  Parallel Hash Join  (cost=3061.21..8356.43 rows=92208 width=8) (actual time=6.570..17.097 rows=73767.33 loops=3)
+              Hash Cond: (oi.order_id = o.order_id)
+              Buffers: shared hit=4914
+              ->  Parallel Seq Scan on order_items oi  (cost=0.00..4536.00 rows=100000 width=8) (actual time=0.497..2.705 rows=80000.00 loops=3)
+                    Buffers: shared hit=3536
+              ->  Parallel Hash  (cost=2484.87..2484.87 rows=46107 width=8) (actual time=6.026..6.028 rows=36882.00 loops=3)
+                    Buckets: 131072  Batches: 1  Memory Usage: 5376kB
+                    Buffers: shared hit=1378
+                    ->  Parallel Append  (cost=0.00..2484.87 rows=46107 width=8) (actual time=0.041..3.962 rows=36882.00 loops=3)
+                          Buffers: shared hit=1378
+                          ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=8) (actual time=0.026..0.026 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=8) (actual time=0.025..0.025 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=8) (actual time=0.022..0.022 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=8) (actual time=0.019..0.019 rows=0.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                          ->  Parallel Seq Scan on orders_2025_q4 o_5  (cost=0.00..379.68 rows=11031 width=8) (actual time=0.009..1.341 rows=18753.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1467
+                                Buffers: shared hit=234
+                          ->  Parallel Seq Scan on orders_2025_q3 o_4  (cost=0.00..379.67 rows=11036 width=8) (actual time=0.010..1.378 rows=18761.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1458
+                                Buffers: shared hit=234
+                          ->  Parallel Seq Scan on orders_2025_q2 o_3  (cost=0.00..376.06 rows=10946 width=8) (actual time=0.002..1.363 rows=18608.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1392
+                                Buffers: shared hit=229
+                          ->  Parallel Seq Scan on orders_2026_q2 o_7  (cost=0.00..376.06 rows=10426 width=8) (actual time=0.001..1.347 rows=17724.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 2276
+                                Buffers: shared hit=229
+                          ->  Parallel Seq Scan on orders_2025_q1 o_2  (cost=0.00..371.45 rows=10808 width=8) (actual time=0.003..0.436 rows=6124.67 loops=3)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 469
+                                Buffers: shared hit=226
+                          ->  Parallel Seq Scan on orders_2026_q1 o_6  (cost=0.00..371.44 rows=10839 width=8) (actual time=0.011..1.289 rows=18426.00 loops=1)
+                                Filter: ((status)::text = ANY ('{DELIVERED,RETURNED}'::text[]))
+                                Rows Removed by Filter: 1354
+                                Buffers: shared hit=226
+        ->  Parallel Hash  (cost=1350.33..1350.33 rows=14862 width=12) (actual time=1.321..1.321 rows=11887.33 loops=3)
+              Buckets: 65536  Batches: 1  Memory Usage: 2208kB
+              Buffers: shared hit=195
+              ->  Parallel Index Only Scan using idx_reviews_product_rating on product_reviews r  (cost=0.29..1350.33 rows=14862 width=12) (actual time=0.019..0.657 rows=11887.33 loops=3)
+                    Filter: verified_purchase
+                    Rows Removed by Filter: 1000
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=195
+Planning:
+  Buffers: shared hit=2170
+Planning Time: 3.675 ms
+Execution Time: 26.178 ms

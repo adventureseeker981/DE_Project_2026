@@ -1,0 +1,108 @@
+=== R16 run 1 ===
+Limit  (cost=1483.38..1483.51 rows=50 width=53) (actual time=2.814..2.817 rows=50.00 loops=1)
+  Buffers: shared hit=546
+  ->  Sort  (cost=1483.38..1484.43 rows=418 width=53) (actual time=2.813..2.815 rows=50.00 loops=1)
+        Sort Key: r.created_at DESC
+        Sort Method: top-N heapsort  Memory: 35kB
+        Buffers: shared hit=546
+        ->  Hash Join  (cost=397.47..1469.50 rows=418 width=53) (actual time=0.749..2.760 rows=584.00 loops=1)
+              Hash Cond: (r.product_id = p.product_id)
+              Buffers: shared hit=543
+              ->  Bitmap Heap Scan on product_reviews r  (cost=77.66..1129.85 rows=4175 width=53) (actual time=0.352..2.154 rows=4203.00 loops=1)
+                    Recheck Cond: (body ~~* '%battery%'::text)
+                    Heap Blocks: exact=477
+                    Buffers: shared hit=496
+                    ->  Bitmap Index Scan on idx_reviews_body_trgm  (cost=0.00..76.61 rows=4175 width=0) (actual time=0.325..0.325 rows=4203.00 loops=1)
+                          Index Cond: (body ~~* '%battery%'::text)
+                          Index Searches: 1
+                          Buffers: shared hit=19
+              ->  Hash  (cost=282.31..282.31 rows=3000 width=4) (actual time=0.383..0.384 rows=3750.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 164kB
+                    Buffers: shared hit=47
+                    ->  Nested Loop  (cost=0.41..282.31 rows=3000 width=4) (actual time=0.008..0.275 rows=3750.00 loops=1)
+                          Buffers: shared hit=47
+                          ->  Seq Scan on categories c  (cost=0.00..1.50 rows=4 width=4) (actual time=0.002..0.003 rows=4.00 loops=1)
+                                Filter: (parent_category_id = 1)
+                                Rows Removed by Filter: 36
+                                Buffers: shared hit=1
+                          ->  Index Only Scan using idx_products_category_status on products p  (cost=0.41..60.82 rows=938 width=8) (actual time=0.002..0.039 rows=937.50 loops=4)
+                                Index Cond: (category_id = c.category_id)
+                                Heap Fetches: 0
+                                Index Searches: 4
+                                Buffers: shared hit=46
+Planning:
+  Buffers: shared hit=496 read=2
+Planning Time: 1.102 ms
+Execution Time: 2.860 ms
+=== R16 run 2 ===
+Limit  (cost=1483.38..1483.51 rows=50 width=53) (actual time=2.826..2.830 rows=50.00 loops=1)
+  Buffers: shared hit=546
+  ->  Sort  (cost=1483.38..1484.43 rows=418 width=53) (actual time=2.826..2.827 rows=50.00 loops=1)
+        Sort Key: r.created_at DESC
+        Sort Method: top-N heapsort  Memory: 35kB
+        Buffers: shared hit=546
+        ->  Hash Join  (cost=397.47..1469.50 rows=418 width=53) (actual time=0.770..2.771 rows=584.00 loops=1)
+              Hash Cond: (r.product_id = p.product_id)
+              Buffers: shared hit=543
+              ->  Bitmap Heap Scan on product_reviews r  (cost=77.66..1129.85 rows=4175 width=53) (actual time=0.367..2.151 rows=4203.00 loops=1)
+                    Recheck Cond: (body ~~* '%battery%'::text)
+                    Heap Blocks: exact=477
+                    Buffers: shared hit=496
+                    ->  Bitmap Index Scan on idx_reviews_body_trgm  (cost=0.00..76.61 rows=4175 width=0) (actual time=0.339..0.339 rows=4203.00 loops=1)
+                          Index Cond: (body ~~* '%battery%'::text)
+                          Index Searches: 1
+                          Buffers: shared hit=19
+              ->  Hash  (cost=282.31..282.31 rows=3000 width=4) (actual time=0.396..0.396 rows=3750.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 164kB
+                    Buffers: shared hit=47
+                    ->  Nested Loop  (cost=0.41..282.31 rows=3000 width=4) (actual time=0.008..0.280 rows=3750.00 loops=1)
+                          Buffers: shared hit=47
+                          ->  Seq Scan on categories c  (cost=0.00..1.50 rows=4 width=4) (actual time=0.002..0.003 rows=4.00 loops=1)
+                                Filter: (parent_category_id = 1)
+                                Rows Removed by Filter: 36
+                                Buffers: shared hit=1
+                          ->  Index Only Scan using idx_products_category_status on products p  (cost=0.41..60.82 rows=938 width=8) (actual time=0.002..0.040 rows=937.50 loops=4)
+                                Index Cond: (category_id = c.category_id)
+                                Heap Fetches: 0
+                                Index Searches: 4
+                                Buffers: shared hit=46
+Planning:
+  Buffers: shared hit=498
+Planning Time: 1.202 ms
+Execution Time: 2.876 ms
+=== R16 run 3 ===
+Limit  (cost=1483.38..1483.51 rows=50 width=53) (actual time=2.892..2.895 rows=50.00 loops=1)
+  Buffers: shared hit=546
+  ->  Sort  (cost=1483.38..1484.43 rows=418 width=53) (actual time=2.892..2.893 rows=50.00 loops=1)
+        Sort Key: r.created_at DESC
+        Sort Method: top-N heapsort  Memory: 35kB
+        Buffers: shared hit=546
+        ->  Hash Join  (cost=397.47..1469.50 rows=418 width=53) (actual time=0.752..2.837 rows=584.00 loops=1)
+              Hash Cond: (r.product_id = p.product_id)
+              Buffers: shared hit=543
+              ->  Bitmap Heap Scan on product_reviews r  (cost=77.66..1129.85 rows=4175 width=53) (actual time=0.358..2.219 rows=4203.00 loops=1)
+                    Recheck Cond: (body ~~* '%battery%'::text)
+                    Heap Blocks: exact=477
+                    Buffers: shared hit=496
+                    ->  Bitmap Index Scan on idx_reviews_body_trgm  (cost=0.00..76.61 rows=4175 width=0) (actual time=0.330..0.331 rows=4203.00 loops=1)
+                          Index Cond: (body ~~* '%battery%'::text)
+                          Index Searches: 1
+                          Buffers: shared hit=19
+              ->  Hash  (cost=282.31..282.31 rows=3000 width=4) (actual time=0.386..0.387 rows=3750.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 164kB
+                    Buffers: shared hit=47
+                    ->  Nested Loop  (cost=0.41..282.31 rows=3000 width=4) (actual time=0.008..0.277 rows=3750.00 loops=1)
+                          Buffers: shared hit=47
+                          ->  Seq Scan on categories c  (cost=0.00..1.50 rows=4 width=4) (actual time=0.002..0.003 rows=4.00 loops=1)
+                                Filter: (parent_category_id = 1)
+                                Rows Removed by Filter: 36
+                                Buffers: shared hit=1
+                          ->  Index Only Scan using idx_products_category_status on products p  (cost=0.41..60.82 rows=938 width=8) (actual time=0.002..0.038 rows=937.50 loops=4)
+                                Index Cond: (category_id = c.category_id)
+                                Heap Fetches: 0
+                                Index Searches: 4
+                                Buffers: shared hit=46
+Planning:
+  Buffers: shared hit=498
+Planning Time: 1.068 ms
+Execution Time: 2.940 ms

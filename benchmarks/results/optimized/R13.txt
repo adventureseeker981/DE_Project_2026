@@ -1,0 +1,93 @@
+=== R13 run 1 ===
+Hash Right Anti Join  (cost=1892.50..6146.53 rows=19147 width=13) (actual time=16.961..17.712 rows=15679.00 loops=1)
+  Hash Cond: (o.address_id = a.address_id)
+  Buffers: shared hit=1372 read=880
+  ->  Append  (cost=0.00..3172.02 rows=120004 width=4) (actual time=0.008..7.502 rows=120000.00 loops=1)
+        Buffers: shared hit=1372
+        ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=4) (actual time=0.004..0.004 rows=0.00 loops=1)
+        ->  Seq Scan on orders_2025_q1 o_2  (cost=0.00..423.81 rows=19781 width=4) (actual time=0.004..0.607 rows=19781.00 loops=1)
+              Buffers: shared hit=226
+        ->  Seq Scan on orders_2025_q2 o_3  (cost=0.00..429.00 rows=20000 width=4) (actual time=0.007..0.684 rows=20000.00 loops=1)
+              Buffers: shared hit=229
+        ->  Seq Scan on orders_2025_q3 o_4  (cost=0.00..433.19 rows=20219 width=4) (actual time=0.006..0.622 rows=20219.00 loops=1)
+              Buffers: shared hit=231
+        ->  Seq Scan on orders_2025_q4 o_5  (cost=0.00..433.20 rows=20220 width=4) (actual time=0.003..0.615 rows=20220.00 loops=1)
+              Buffers: shared hit=231
+        ->  Seq Scan on orders_2026_q1 o_6  (cost=0.00..423.80 rows=19780 width=4) (actual time=0.007..0.621 rows=19780.00 loops=1)
+              Buffers: shared hit=226
+        ->  Seq Scan on orders_2026_q2 o_7  (cost=0.00..429.00 rows=20000 width=4) (actual time=0.003..0.675 rows=20000.00 loops=1)
+              Buffers: shared hit=229
+        ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=4) (actual time=0.007..0.007 rows=0.00 loops=1)
+        ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=4) (actual time=0.004..0.004 rows=0.00 loops=1)
+        ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=4) (actual time=0.001..0.001 rows=0.00 loops=1)
+  ->  Hash  (cost=1330.00..1330.00 rows=45000 width=13) (actual time=4.486..4.486 rows=45000.00 loops=1)
+        Buckets: 65536  Batches: 1  Memory Usage: 2490kB
+        Buffers: shared read=880
+        ->  Seq Scan on addresses a  (cost=0.00..1330.00 rows=45000 width=13) (actual time=0.695..2.388 rows=45000.00 loops=1)
+              Buffers: shared read=880
+Planning:
+  Buffers: shared hit=1871 read=5
+Planning Time: 3.608 ms
+Execution Time: 18.043 ms
+=== R13 run 2 ===
+Hash Right Anti Join  (cost=1892.50..6146.53 rows=19147 width=13) (actual time=16.383..17.165 rows=15679.00 loops=1)
+  Hash Cond: (o.address_id = a.address_id)
+  Buffers: shared hit=2252
+  ->  Append  (cost=0.00..3172.02 rows=120004 width=4) (actual time=0.004..7.460 rows=120000.00 loops=1)
+        Buffers: shared hit=1372
+        ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=4) (actual time=0.001..0.002 rows=0.00 loops=1)
+        ->  Seq Scan on orders_2025_q1 o_2  (cost=0.00..423.81 rows=19781 width=4) (actual time=0.002..0.597 rows=19781.00 loops=1)
+              Buffers: shared hit=226
+        ->  Seq Scan on orders_2025_q2 o_3  (cost=0.00..429.00 rows=20000 width=4) (actual time=0.003..0.662 rows=20000.00 loops=1)
+              Buffers: shared hit=229
+        ->  Seq Scan on orders_2025_q3 o_4  (cost=0.00..433.19 rows=20219 width=4) (actual time=0.004..0.627 rows=20219.00 loops=1)
+              Buffers: shared hit=231
+        ->  Seq Scan on orders_2025_q4 o_5  (cost=0.00..433.20 rows=20220 width=4) (actual time=0.004..0.605 rows=20220.00 loops=1)
+              Buffers: shared hit=231
+        ->  Seq Scan on orders_2026_q1 o_6  (cost=0.00..423.80 rows=19780 width=4) (actual time=0.004..0.629 rows=19780.00 loops=1)
+              Buffers: shared hit=226
+        ->  Seq Scan on orders_2026_q2 o_7  (cost=0.00..429.00 rows=20000 width=4) (actual time=0.005..0.673 rows=20000.00 loops=1)
+              Buffers: shared hit=229
+        ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=4) (actual time=0.004..0.004 rows=0.00 loops=1)
+        ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+        ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=4) (actual time=0.001..0.001 rows=0.00 loops=1)
+  ->  Hash  (cost=1330.00..1330.00 rows=45000 width=13) (actual time=3.827..3.827 rows=45000.00 loops=1)
+        Buckets: 65536  Batches: 1  Memory Usage: 2490kB
+        Buffers: shared hit=880
+        ->  Seq Scan on addresses a  (cost=0.00..1330.00 rows=45000 width=13) (actual time=0.219..1.881 rows=45000.00 loops=1)
+              Buffers: shared hit=880
+Planning:
+  Buffers: shared hit=1868
+Planning Time: 2.956 ms
+Execution Time: 17.493 ms
+=== R13 run 3 ===
+Hash Right Anti Join  (cost=1892.50..6146.53 rows=19147 width=13) (actual time=16.726..17.552 rows=15679.00 loops=1)
+  Hash Cond: (o.address_id = a.address_id)
+  Buffers: shared hit=2252
+  ->  Append  (cost=0.00..3172.02 rows=120004 width=4) (actual time=0.004..7.691 rows=120000.00 loops=1)
+        Buffers: shared hit=1372
+        ->  Seq Scan on orders_before_2025 o_1  (cost=0.00..0.00 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+        ->  Seq Scan on orders_2025_q1 o_2  (cost=0.00..423.81 rows=19781 width=4) (actual time=0.002..0.620 rows=19781.00 loops=1)
+              Buffers: shared hit=226
+        ->  Seq Scan on orders_2025_q2 o_3  (cost=0.00..429.00 rows=20000 width=4) (actual time=0.003..0.669 rows=20000.00 loops=1)
+              Buffers: shared hit=229
+        ->  Seq Scan on orders_2025_q3 o_4  (cost=0.00..433.19 rows=20219 width=4) (actual time=0.004..0.650 rows=20219.00 loops=1)
+              Buffers: shared hit=231
+        ->  Seq Scan on orders_2025_q4 o_5  (cost=0.00..433.20 rows=20220 width=4) (actual time=0.003..0.636 rows=20220.00 loops=1)
+              Buffers: shared hit=231
+        ->  Seq Scan on orders_2026_q1 o_6  (cost=0.00..423.80 rows=19780 width=4) (actual time=0.004..0.637 rows=19780.00 loops=1)
+              Buffers: shared hit=226
+        ->  Seq Scan on orders_2026_q2 o_7  (cost=0.00..429.00 rows=20000 width=4) (actual time=0.003..0.692 rows=20000.00 loops=1)
+              Buffers: shared hit=229
+        ->  Seq Scan on orders_2026_q3 o_8  (cost=0.00..0.00 rows=1 width=4) (actual time=0.003..0.003 rows=0.00 loops=1)
+        ->  Seq Scan on orders_2026_q4 o_9  (cost=0.00..0.00 rows=1 width=4) (actual time=0.004..0.004 rows=0.00 loops=1)
+        ->  Seq Scan on orders_future o_10  (cost=0.00..0.00 rows=1 width=4) (actual time=0.002..0.002 rows=0.00 loops=1)
+  ->  Hash  (cost=1330.00..1330.00 rows=45000 width=13) (actual time=3.808..3.809 rows=45000.00 loops=1)
+        Buckets: 65536  Batches: 1  Memory Usage: 2490kB
+        Buffers: shared hit=880
+        ->  Seq Scan on addresses a  (cost=0.00..1330.00 rows=45000 width=13) (actual time=0.201..1.860 rows=45000.00 loops=1)
+              Buffers: shared hit=880
+Planning:
+  Buffers: shared hit=1868
+Planning Time: 2.970 ms
+Execution Time: 17.877 ms

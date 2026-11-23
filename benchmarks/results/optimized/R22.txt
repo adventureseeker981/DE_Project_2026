@@ -1,0 +1,297 @@
+=== R22 run 1 ===
+Limit  (cost=6628.22..6630.65 rows=25 width=30) (actual time=13.878..13.881 rows=25.00 loops=1)
+  Buffers: shared hit=909 read=188
+  InitPlan 1
+    ->  Limit  (cost=6625.85..6625.94 rows=1 width=12) (actual time=13.829..13.830 rows=1.00 loops=1)
+          Buffers: shared hit=885 read=187
+          ->  Incremental Sort  (cost=2.28..10600.35 rows=120004 width=12) (actual time=0.019..12.590 rows=75001.00 loops=1)
+                Sort Key: orders_11.ordered_at DESC, orders_11.order_id DESC
+                Presorted Key: orders_11.ordered_at
+                Full-sort Groups: 2344  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+                Buffers: shared hit=885 read=187
+                ->  Append  (cost=2.23..5200.31 rows=120004 width=12) (actual time=0.012..9.138 rows=75002.00 loops=1)
+                      Buffers: shared hit=885 read=187
+                      ->  Index Scan using orders_future_ordered_at_idx1 on orders_future orders_21  (cost=0.12..8.14 rows=1 width=12) (actual time=0.002..0.002 rows=0.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=1
+                      ->  Index Scan using orders_2026_q4_ordered_at_idx1 on orders_2026_q4 orders_20  (cost=0.12..8.14 rows=1 width=12) (actual time=0.002..0.002 rows=0.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=1
+                      ->  Index Scan using orders_2026_q3_ordered_at_idx1 on orders_2026_q3 orders_19  (cost=0.12..8.14 rows=1 width=12) (actual time=0.001..0.001 rows=0.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=1
+                      ->  Index Scan using orders_2026_q2_ordered_at_idx1 on orders_2026_q2 orders_18  (cost=0.29..760.29 rows=20000 width=12) (actual time=0.007..1.827 rows=20000.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=250 read=35
+                      ->  Index Scan using orders_2026_q1_ordered_at_idx1 on orders_2026_q1 orders_17  (cost=0.29..753.99 rows=19780 width=12) (actual time=0.008..1.679 rows=19780.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=229 read=53
+                      ->  Index Scan using orders_2025_q4_ordered_at_idx1 on orders_2025_q4 orders_16  (cost=0.29..769.59 rows=20220 width=12) (actual time=0.153..1.757 rows=20220.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=231 read=57
+                      ->  Index Scan using orders_2025_q3_ordered_at_idx1 on orders_2025_q3 orders_15  (cost=0.29..769.57 rows=20219 width=12) (actual time=0.155..1.538 rows=15002.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=172 read=42
+                      ->  Index Scan using orders_2025_q2_ordered_at_idx1 on orders_2025_q2 orders_14  (cost=0.29..760.29 rows=20000 width=12) (never executed)
+                            Index Searches: 0
+                      ->  Index Scan using orders_2025_q1_ordered_at_idx1 on orders_2025_q1 orders_13  (cost=0.29..754.00 rows=19781 width=12) (never executed)
+                            Index Searches: 0
+                      ->  Index Scan using orders_before_2025_ordered_at_idx1 on orders_before_2025 orders_12  (cost=0.12..8.14 rows=1 width=12) (never executed)
+                            Index Searches: 0
+  ->  Incremental Sort  (cost=2.29..3888.59 rows=40005 width=30) (actual time=13.877..13.878 rows=25.00 loops=1)
+        Sort Key: orders.ordered_at DESC, orders.order_id DESC
+        Presorted Key: orders.ordered_at
+        Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+        Buffers: shared hit=909 read=188
+        ->  Append  (cost=2.23..2088.36 rows=40005 width=30) (actual time=13.861..13.868 rows=26.00 loops=1)
+              Buffers: shared hit=900 read=188
+              ->  Index Scan using orders_future_ordered_at_idx1 on orders_future orders_10  (cost=0.12..8.15 rows=1 width=90) (actual time=13.836..13.836 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=887 read=187
+              ->  Index Scan using orders_2026_q4_ordered_at_idx1 on orders_2026_q4 orders_9  (cost=0.12..8.15 rows=1 width=90) (actual time=0.003..0.003 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2026_q3_ordered_at_idx1 on orders_2026_q3 orders_8  (cost=0.12..8.15 rows=1 width=90) (actual time=0.003..0.003 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2026_q2_ordered_at_idx1 on orders_2026_q2 orders_7  (cost=0.29..310.30 rows=6667 width=30) (actual time=0.004..0.004 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2026_q1_ordered_at_idx1 on orders_2026_q1 orders_6  (cost=0.29..303.63 rows=6593 width=30) (actual time=0.004..0.004 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2025_q4_ordered_at_idx1 on orders_2025_q4 orders_5  (cost=0.29..311.94 rows=6740 width=30) (actual time=0.004..0.004 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2025_q3_ordered_at_idx1 on orders_2025_q3 orders_4  (cost=0.29..311.94 rows=6740 width=30) (actual time=0.006..0.012 rows=26.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Rows Removed by Filter: 1
+                    Index Searches: 1
+                    Buffers: shared hit=3 read=1
+              ->  Index Scan using orders_2025_q2_ordered_at_idx1 on orders_2025_q2 orders_3  (cost=0.29..310.30 rows=6667 width=30) (never executed)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 0
+              ->  Index Scan using orders_2025_q1_ordered_at_idx1 on orders_2025_q1 orders_2  (cost=0.29..307.65 rows=6594 width=30) (never executed)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 0
+              ->  Index Scan using orders_before_2025_ordered_at_idx1 on orders_before_2025 orders_1  (cost=0.12..8.15 rows=1 width=90) (never executed)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 0
+Planning:
+  Buffers: shared hit=1906
+Planning Time: 2.904 ms
+Execution Time: 13.930 ms
+=== R22 run 2 ===
+Limit  (cost=6628.22..6630.65 rows=25 width=30) (actual time=11.588..11.591 rows=25.00 loops=1)
+  Buffers: shared hit=1097
+  InitPlan 1
+    ->  Limit  (cost=6625.85..6625.94 rows=1 width=12) (actual time=11.546..11.547 rows=1.00 loops=1)
+          Buffers: shared hit=1072
+          ->  Incremental Sort  (cost=2.28..10600.35 rows=120004 width=12) (actual time=0.020..10.344 rows=75001.00 loops=1)
+                Sort Key: orders_11.ordered_at DESC, orders_11.order_id DESC
+                Presorted Key: orders_11.ordered_at
+                Full-sort Groups: 2344  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+                Buffers: shared hit=1072
+                ->  Append  (cost=2.23..5200.31 rows=120004 width=12) (actual time=0.012..6.855 rows=75002.00 loops=1)
+                      Buffers: shared hit=1072
+                      ->  Index Scan using orders_future_ordered_at_idx1 on orders_future orders_21  (cost=0.12..8.14 rows=1 width=12) (actual time=0.002..0.002 rows=0.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=1
+                      ->  Index Scan using orders_2026_q4_ordered_at_idx1 on orders_2026_q4 orders_20  (cost=0.12..8.14 rows=1 width=12) (actual time=0.002..0.002 rows=0.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=1
+                      ->  Index Scan using orders_2026_q3_ordered_at_idx1 on orders_2026_q3 orders_19  (cost=0.12..8.14 rows=1 width=12) (actual time=0.001..0.001 rows=0.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=1
+                      ->  Index Scan using orders_2026_q2_ordered_at_idx1 on orders_2026_q2 orders_18  (cost=0.29..760.29 rows=20000 width=12) (actual time=0.007..1.198 rows=20000.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=285
+                      ->  Index Scan using orders_2026_q1_ordered_at_idx1 on orders_2026_q1 orders_17  (cost=0.29..753.99 rows=19780 width=12) (actual time=0.007..1.255 rows=19780.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=282
+                      ->  Index Scan using orders_2025_q4_ordered_at_idx1 on orders_2025_q4 orders_16  (cost=0.29..769.59 rows=20220 width=12) (actual time=0.017..1.194 rows=20220.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=288
+                      ->  Index Scan using orders_2025_q3_ordered_at_idx1 on orders_2025_q3 orders_15  (cost=0.29..769.57 rows=20219 width=12) (actual time=0.008..0.898 rows=15002.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=214
+                      ->  Index Scan using orders_2025_q2_ordered_at_idx1 on orders_2025_q2 orders_14  (cost=0.29..760.29 rows=20000 width=12) (never executed)
+                            Index Searches: 0
+                      ->  Index Scan using orders_2025_q1_ordered_at_idx1 on orders_2025_q1 orders_13  (cost=0.29..754.00 rows=19781 width=12) (never executed)
+                            Index Searches: 0
+                      ->  Index Scan using orders_before_2025_ordered_at_idx1 on orders_before_2025 orders_12  (cost=0.12..8.14 rows=1 width=12) (never executed)
+                            Index Searches: 0
+  ->  Incremental Sort  (cost=2.29..3888.59 rows=40005 width=30) (actual time=11.587..11.588 rows=25.00 loops=1)
+        Sort Key: orders.ordered_at DESC, orders.order_id DESC
+        Presorted Key: orders.ordered_at
+        Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+        Buffers: shared hit=1097
+        ->  Append  (cost=2.23..2088.36 rows=40005 width=30) (actual time=11.571..11.577 rows=26.00 loops=1)
+              Buffers: shared hit=1088
+              ->  Index Scan using orders_future_ordered_at_idx1 on orders_future orders_10  (cost=0.12..8.15 rows=1 width=90) (actual time=11.550..11.550 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=1074
+              ->  Index Scan using orders_2026_q4_ordered_at_idx1 on orders_2026_q4 orders_9  (cost=0.12..8.15 rows=1 width=90) (actual time=0.002..0.002 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2026_q3_ordered_at_idx1 on orders_2026_q3 orders_8  (cost=0.12..8.15 rows=1 width=90) (actual time=0.003..0.003 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2026_q2_ordered_at_idx1 on orders_2026_q2 orders_7  (cost=0.29..310.30 rows=6667 width=30) (actual time=0.003..0.004 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2026_q1_ordered_at_idx1 on orders_2026_q1 orders_6  (cost=0.29..303.63 rows=6593 width=30) (actual time=0.003..0.003 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2025_q4_ordered_at_idx1 on orders_2025_q4 orders_5  (cost=0.29..311.94 rows=6740 width=30) (actual time=0.003..0.003 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2025_q3_ordered_at_idx1 on orders_2025_q3 orders_4  (cost=0.29..311.94 rows=6740 width=30) (actual time=0.005..0.010 rows=26.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Rows Removed by Filter: 1
+                    Index Searches: 1
+                    Buffers: shared hit=4
+              ->  Index Scan using orders_2025_q2_ordered_at_idx1 on orders_2025_q2 orders_3  (cost=0.29..310.30 rows=6667 width=30) (never executed)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 0
+              ->  Index Scan using orders_2025_q1_ordered_at_idx1 on orders_2025_q1 orders_2  (cost=0.29..307.65 rows=6594 width=30) (never executed)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 0
+              ->  Index Scan using orders_before_2025_ordered_at_idx1 on orders_before_2025 orders_1  (cost=0.12..8.15 rows=1 width=90) (never executed)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 0
+Planning:
+  Buffers: shared hit=1906
+Planning Time: 2.847 ms
+Execution Time: 11.666 ms
+=== R22 run 3 ===
+Limit  (cost=6628.22..6630.65 rows=25 width=30) (actual time=11.342..11.345 rows=25.00 loops=1)
+  Buffers: shared hit=1097
+  InitPlan 1
+    ->  Limit  (cost=6625.85..6625.94 rows=1 width=12) (actual time=11.304..11.305 rows=1.00 loops=1)
+          Buffers: shared hit=1072
+          ->  Incremental Sort  (cost=2.28..10600.35 rows=120004 width=12) (actual time=0.020..10.096 rows=75001.00 loops=1)
+                Sort Key: orders_11.ordered_at DESC, orders_11.order_id DESC
+                Presorted Key: orders_11.ordered_at
+                Full-sort Groups: 2344  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+                Buffers: shared hit=1072
+                ->  Append  (cost=2.23..5200.31 rows=120004 width=12) (actual time=0.013..6.779 rows=75002.00 loops=1)
+                      Buffers: shared hit=1072
+                      ->  Index Scan using orders_future_ordered_at_idx1 on orders_future orders_21  (cost=0.12..8.14 rows=1 width=12) (actual time=0.003..0.003 rows=0.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=1
+                      ->  Index Scan using orders_2026_q4_ordered_at_idx1 on orders_2026_q4 orders_20  (cost=0.12..8.14 rows=1 width=12) (actual time=0.002..0.002 rows=0.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=1
+                      ->  Index Scan using orders_2026_q3_ordered_at_idx1 on orders_2026_q3 orders_19  (cost=0.12..8.14 rows=1 width=12) (actual time=0.001..0.001 rows=0.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=1
+                      ->  Index Scan using orders_2026_q2_ordered_at_idx1 on orders_2026_q2 orders_18  (cost=0.29..760.29 rows=20000 width=12) (actual time=0.007..1.212 rows=20000.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=285
+                      ->  Index Scan using orders_2026_q1_ordered_at_idx1 on orders_2026_q1 orders_17  (cost=0.29..753.99 rows=19780 width=12) (actual time=0.007..1.240 rows=19780.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=282
+                      ->  Index Scan using orders_2025_q4_ordered_at_idx1 on orders_2025_q4 orders_16  (cost=0.29..769.59 rows=20220 width=12) (actual time=0.008..1.181 rows=20220.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=288
+                      ->  Index Scan using orders_2025_q3_ordered_at_idx1 on orders_2025_q3 orders_15  (cost=0.29..769.57 rows=20219 width=12) (actual time=0.006..0.876 rows=15002.00 loops=1)
+                            Index Searches: 1
+                            Buffers: shared hit=214
+                      ->  Index Scan using orders_2025_q2_ordered_at_idx1 on orders_2025_q2 orders_14  (cost=0.29..760.29 rows=20000 width=12) (never executed)
+                            Index Searches: 0
+                      ->  Index Scan using orders_2025_q1_ordered_at_idx1 on orders_2025_q1 orders_13  (cost=0.29..754.00 rows=19781 width=12) (never executed)
+                            Index Searches: 0
+                      ->  Index Scan using orders_before_2025_ordered_at_idx1 on orders_before_2025 orders_12  (cost=0.12..8.14 rows=1 width=12) (never executed)
+                            Index Searches: 0
+  ->  Incremental Sort  (cost=2.29..3888.59 rows=40005 width=30) (actual time=11.342..11.343 rows=25.00 loops=1)
+        Sort Key: orders.ordered_at DESC, orders.order_id DESC
+        Presorted Key: orders.ordered_at
+        Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+        Buffers: shared hit=1097
+        ->  Append  (cost=2.23..2088.36 rows=40005 width=30) (actual time=11.326..11.332 rows=26.00 loops=1)
+              Buffers: shared hit=1088
+              ->  Index Scan using orders_future_ordered_at_idx1 on orders_future orders_10  (cost=0.12..8.15 rows=1 width=90) (actual time=11.308..11.308 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=1074
+              ->  Index Scan using orders_2026_q4_ordered_at_idx1 on orders_2026_q4 orders_9  (cost=0.12..8.15 rows=1 width=90) (actual time=0.002..0.002 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2026_q3_ordered_at_idx1 on orders_2026_q3 orders_8  (cost=0.12..8.15 rows=1 width=90) (actual time=0.002..0.002 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2026_q2_ordered_at_idx1 on orders_2026_q2 orders_7  (cost=0.29..310.30 rows=6667 width=30) (actual time=0.003..0.003 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2026_q1_ordered_at_idx1 on orders_2026_q1 orders_6  (cost=0.29..303.63 rows=6593 width=30) (actual time=0.003..0.003 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2025_q4_ordered_at_idx1 on orders_2025_q4 orders_5  (cost=0.29..311.94 rows=6740 width=30) (actual time=0.002..0.002 rows=0.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 1
+                    Buffers: shared hit=2
+              ->  Index Scan using orders_2025_q3_ordered_at_idx1 on orders_2025_q3 orders_4  (cost=0.29..311.94 rows=6740 width=30) (actual time=0.004..0.009 rows=26.00 loops=1)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Rows Removed by Filter: 1
+                    Index Searches: 1
+                    Buffers: shared hit=4
+              ->  Index Scan using orders_2025_q2_ordered_at_idx1 on orders_2025_q2 orders_3  (cost=0.29..310.30 rows=6667 width=30) (never executed)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 0
+              ->  Index Scan using orders_2025_q1_ordered_at_idx1 on orders_2025_q1 orders_2  (cost=0.29..307.65 rows=6594 width=30) (never executed)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 0
+              ->  Index Scan using orders_before_2025_ordered_at_idx1 on orders_before_2025 orders_1  (cost=0.12..8.15 rows=1 width=90) (never executed)
+                    Index Cond: (ordered_at <= (InitPlan 1).col1)
+                    Filter: (ROW(ordered_at, order_id) < ROW((InitPlan 1).col1, (InitPlan 1).col2))
+                    Index Searches: 0
+Planning:
+  Buffers: shared hit=1906
+Planning Time: 3.506 ms
+Execution Time: 11.399 ms
